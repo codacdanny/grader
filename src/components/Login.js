@@ -55,7 +55,13 @@ const Login = () => {
         </FormControl>
 
         <FormControl w="100%">
-          <FormLabel htmlFor="password" fontSize="1.7rem" my=".7rem" ml="2rem">
+          <FormLabel
+            htmlFor="password"
+            fontSize="1.7rem"
+            my=".7rem"
+            ml="2rem"
+            colorScheme="whiteAlpha"
+          >
             Password:
           </FormLabel>
           <Input
