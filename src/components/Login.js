@@ -40,7 +40,13 @@ const Login = () => {
           LogIn
         </Heading>
         <FormControl my="2rem" w="100%">
-          <FormLabel htmlFor="email" fontSize="1.7rem" my=".7rem" ml="2rem">
+          <FormLabel
+            htmlFor="email"
+            fontSize="1.7rem"
+            my=".7rem"
+            ml="2rem"
+            color="white"
+          >
             Email:
           </FormLabel>
           <Input
