@@ -107,6 +107,7 @@ const SignUp = () => {
             fontSize="1.6rem"
             borderRadius="10rem"
             w="100%"
+            color="white"
           />
         </FormControl>
         <Box mt="2rem" fontSize="1.6rem" textAlign="center" minWidth="100%">
@@ -122,7 +123,7 @@ const SignUp = () => {
           >
             Login
           </Button>
-          <Box mt="2rem">
+          <Box mt="2rem" color="white">
             <Text>
               Already have an account?{' '}
               <Link to="/Login" color="#C05621">
