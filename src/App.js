@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChakraProvider, VStack, theme, Container } from '@chakra-ui/react';
-import Login from './components/Login';
+// import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
           alignItems="center"
           maxW="80rem"
         >
-          <Login />
+          {/* <Login /> */}
+          <SignUp />
         </Container>
       </VStack>
     </ChakraProvider>

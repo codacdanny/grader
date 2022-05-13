@@ -7,11 +7,17 @@ import {
   Heading,
   Box,
   Button,
+  Link,
+  Text,
 } from '@chakra-ui/react';
 
 import React from 'react';
+import { useRef } from 'react';
 
 const Login = () => {
+  const emailref = useRef();
+  const passwordref = useRef();
+
   return (
     <Flex
       flexDir="column"
@@ -24,7 +30,7 @@ const Login = () => {
         display="flex"
         className="card"
         p="3rem"
-        height="70vh"
+        height="90%"
         w="50rem"
         flexDir="column"
         alignItems="center"
@@ -35,7 +41,7 @@ const Login = () => {
           fontSize="3rem"
           textColor="#C05621"
           textTransform="uppercase"
-          mt="-4rem"
+          mt="-2rem"
         >
           LogIn
         </Heading>
@@ -52,8 +58,9 @@ const Login = () => {
           <Input
             id="email"
             type="email"
+            ref={emailref}
             placeholder="name@mail.com"
-            padding="1.7rem"
+            padding="2rem"
             fontSize="1.6rem"
             borderRadius="10rem"
             w="100%"
@@ -73,6 +80,7 @@ const Login = () => {
           <Input
             id="password"
             type="password"
+            ref={passwordref}
             placeholder="*******"
             padding="2rem"
             w="100%"
@@ -81,7 +89,8 @@ const Login = () => {
             color="white"
           />
         </FormControl>
-        <Box mt="2rem">
+
+        <Box mt="3rem" fontSize="1.6rem" textAlign="center" minWidth="100%">
           <Button
             fontSize="1.6rem"
             px="1.7rem"
@@ -93,6 +102,20 @@ const Login = () => {
           >
             Login
           </Button>
+          <Box mt="1rem">
+            <Text>
+              Don't have an account?{' '}
+              <Link to="/Login" color="#C05621">
+                Sign Up
+              </Link>
+            </Text>
+            <Text>
+              Forgot password?{' '}
+              <Link to="/Reset" color="#C05621">
+                Reset Password
+              </Link>
+            </Text>
+          </Box>
         </Box>
       </Container>
     </Flex>
