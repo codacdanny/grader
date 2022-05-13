@@ -63,6 +63,7 @@ const SignUp = () => {
             fontSize="1.6rem"
             borderRadius="10rem"
             w="100%"
+            color="white"
           />
         </FormControl>
 
