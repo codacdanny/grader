@@ -60,7 +60,7 @@ const Login = () => {
             fontSize="1.7rem"
             my=".7rem"
             ml="2rem"
-            colorScheme="whiteAlpha"
+            color="white"
           >
             Password:
           </FormLabel>
@@ -68,14 +68,23 @@ const Login = () => {
             id="password"
             type="password"
             placeholder="*******"
-            padding="1.7rem"
+            padding="2rem"
             w="100%"
             fontSize="1.6rem"
             borderRadius="10rem"
+            color="white"
           />
         </FormControl>
         <Box mt="2rem">
-          <Button px="1.5rem" py="1.2rem">
+          <Button
+            fontSize="1.6rem"
+            px="1.7rem"
+            py="1.8rem"
+            bgColor="orange.600"
+            _hover={{
+              bgColor: 'orange.400',
+            }}
+          >
             Login
           </Button>
         </Box>
