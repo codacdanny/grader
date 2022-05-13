@@ -111,6 +111,7 @@ const SignUp = () => {
         </FormControl>
         <Box mt="2rem" fontSize="1.6rem" textAlign="center" minWidth="100%">
           <Button
+            type="submit"
             fontSize="1.6rem"
             px="1.7rem"
             py="1.8rem"

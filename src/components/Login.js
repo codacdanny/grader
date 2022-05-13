@@ -92,6 +92,7 @@ const Login = () => {
 
         <Box mt="3rem" fontSize="1.6rem" textAlign="center" minWidth="100%">
           <Button
+            type="submit"
             fontSize="1.6rem"
             px="1.7rem"
             py="1.8rem"
@@ -102,7 +103,7 @@ const Login = () => {
           >
             Login
           </Button>
-          <Box mt="1rem">
+          <Box mt="1rem" color="white">
             <Text>
               Don't have an account?{' '}
               <Link to="/Login" color="#C05621">
