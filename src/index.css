@@ -1,0 +1,19 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  background-color: #080808 !important;
+}
+
+.card {
+  border-radius: 22px;
+  background: #161616;
+  box-shadow: 7px 7px 29px #262525, -7px -7px 29px #2c2b2b;
+}
