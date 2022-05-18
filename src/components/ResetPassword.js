@@ -11,40 +11,34 @@ import {
   AlertIcon,
   AlertTitle,
 } from '@chakra-ui/react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import React, { useState } from 'react';
-
-// import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useAuth } from '../context/AuthContext';
-const SignUp = () => {
+
+const ResetPassword = () => {
+  // const emailref = useRef();
+  // const passwordref = useRef();
+
   const [loading, setloading] = useState(false);
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  //   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [display, setDisplay] = useState('');
 
-  const navigate = useNavigate();
+  const { passwordReset } = useAuth();
 
-  const { signup } = useAuth();
-  async function handleSubmit(e) {
+  async function handleReset(e) {
     e.preventDefault();
-    setError('');
     setloading(true);
-
-    if (passwordConfirm === password) {
-      try {
-        await signup(email, password);
-        navigate('/');
-      } catch (err) {
-        setError(err.message);
-      }
-    } else {
-      setError('passwords do not match');
+    try {
+      await passwordReset(email);
+      setDisplay('check your email');
+    } catch (err) {
+      setError(err.message);
     }
-
-    setloading(false);
   }
+
   return (
     <Flex
       flexDir="column"
@@ -57,6 +51,7 @@ const SignUp = () => {
         className="card"
         p="3rem"
         height="100%"
+        minW=""
         flexDir="column"
         alignItems="center"
         justifyContent="center"
@@ -68,7 +63,7 @@ const SignUp = () => {
           textTransform="uppercase"
           mt="-4rem"
         >
-          Sign Up
+          Reset Password
         </Heading>
         {error && (
           <Alert status="error" fontSize="1.4rem" my="1rem">
@@ -76,7 +71,13 @@ const SignUp = () => {
             <AlertTitle>{error}</AlertTitle>
           </Alert>
         )}
-        <FormControl my="2rem" w="100%" onSubmit={handleSubmit}>
+        {display && (
+          <Alert status="success" fontSize="1.4rem" my="1rem">
+            <AlertIcon />
+            <AlertTitle>{display}</AlertTitle>
+          </Alert>
+        )}
+        <FormControl my="2rem" w="100%">
           <FormLabel
             htmlFor="email"
             fontSize="1.7rem"
@@ -101,56 +102,10 @@ const SignUp = () => {
             color="white"
           />
 
-          <FormLabel
-            htmlFor="password"
-            fontSize="1.7rem"
-            my=".7rem"
-            ml="2rem"
-            color="white"
-          >
-            Password:
-          </FormLabel>
-          <Input
-            isRequired={true}
-            onChange={e => setPassword(e.target.value)}
-            id="password"
-            type="password"
-            // ref={passwordref}
-            placeholder="*******"
-            padding="2rem"
-            w="100%"
-            fontSize="1.6rem"
-            borderRadius="10rem"
-            color="white"
-          />
-
-          <FormLabel
-            htmlFor="password-confirm"
-            fontSize="1.7rem"
-            my=".7rem"
-            ml="2rem"
-            color="white"
-          >
-            Confirm Password:
-          </FormLabel>
-          <Input
-            isRequired={true}
-            onChange={e => setPasswordConfirm(e.target.value)}
-            id="password-confirm"
-            type="password"
-            // ref={password_confirm_ref}
-            placeholder="*******"
-            padding="2rem"
-            fontSize="1.6rem"
-            borderRadius="10rem"
-            w="100%"
-            color="white"
-          />
-
           <Box mt="3rem" fontSize="1.6rem" textAlign="center" minWidth="100%">
             <Button
               isDisabled={loading}
-              onClick={handleSubmit}
+              onClick={handleReset}
               type="submit"
               fontSize="1.6rem"
               px="1.7rem"
@@ -162,7 +117,7 @@ const SignUp = () => {
               textColor="black"
               w="100%"
             >
-              SignUp
+              Reset
             </Button>
           </Box>
         </FormControl>
@@ -186,4 +141,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default ResetPassword;

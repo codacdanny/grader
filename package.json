@@ -13,7 +13,10 @@
     "framer-motion": "^6.3.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-github-button": "^0.1.11",
+    "react-google-button": "^0.7.2",
     "react-icons": "^3.11.0",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^0.2.4"
   },

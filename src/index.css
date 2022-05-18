@@ -10,6 +10,7 @@ html {
 }
 body {
   background-color: #080808 !important;
+  max-width: unset !important;
 }
 
 .card {

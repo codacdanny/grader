@@ -3,35 +3,82 @@ import {
   FormControl,
   Input,
   FormLabel,
-  Container,
   Heading,
   Box,
   Button,
-  Link,
   Text,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  ButtonGroup,
 } from '@chakra-ui/react';
+import { DiGithubBadge } from 'react-icons/di';
+import { Link, useNavigate } from 'react-router-dom';
 
-import React from 'react';
-import { useRef } from 'react';
+import React, { useState } from 'react';
+// import { useRef } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
-  const emailref = useRef();
-  const passwordref = useRef();
+  // const emailref = useRef();
+  // const passwordref = useRef();
+
+  const [loading, setloading] = useState(false);
+  //   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
+
+  const { login, googleSignIn, gitHubSignIn } = useAuth();
+
+  const handleGoogleSignin = async e => {
+    e.preventDefault();
+    try {
+      await googleSignIn();
+      navigate('/home');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleGitHubSignin = async e => {
+    e.preventDefault();
+    try {
+      await gitHubSignIn();
+      navigate('/home');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError('');
+    setloading(true);
+    try {
+      await login(email, password);
+      navigate('/home');
+    } catch (err) {
+      setError(err.message);
+    }
+    setloading(false);
+  }
 
   return (
     <Flex
+      as="main"
       flexDir="column"
       alignItems="center"
       justifyContent="center"
       h="100vh"
-      minW="100vw"
     >
-      <Container
+      <Box
         display="flex"
         className="card"
         p="3rem"
-        height="90%"
-        w="50rem"
+        height="100%"
         flexDir="column"
         alignItems="center"
         justifyContent="center"
@@ -39,13 +86,19 @@ const Login = () => {
         <Heading
           as="h1"
           fontSize="3rem"
-          textColor="#C05621"
+          textColor="white"
           textTransform="uppercase"
-          mt="-2rem"
+          mt="-4rem"
         >
-          LogIn
+          Log in
         </Heading>
-        <FormControl my="2rem" w="100%">
+        {error && (
+          <Alert status="error" fontSize="1.4rem" my="1rem">
+            <AlertIcon />
+            <AlertTitle>{error}</AlertTitle>
+          </Alert>
+        )}
+        <FormControl my="2rem" w="100%" onSubmit={handleSubmit}>
           <FormLabel
             htmlFor="email"
             fontSize="1.7rem"
@@ -55,10 +108,13 @@ const Login = () => {
           >
             Email:
           </FormLabel>
+
           <Input
+            onChange={e => setEmail(e.target.value)}
+            isRequired={true}
             id="email"
             type="email"
-            ref={emailref}
+            // ref={emailref}
             placeholder="name@mail.com"
             padding="2rem"
             fontSize="1.6rem"
@@ -66,9 +122,7 @@ const Login = () => {
             w="100%"
             color="white"
           />
-        </FormControl>
 
-        <FormControl w="100%">
           <FormLabel
             htmlFor="password"
             fontSize="1.7rem"
@@ -79,9 +133,11 @@ const Login = () => {
             Password:
           </FormLabel>
           <Input
+            isRequired={true}
+            onChange={e => setPassword(e.target.value)}
             id="password"
             type="password"
-            ref={passwordref}
+            // ref={passwordref}
             placeholder="*******"
             padding="2rem"
             w="100%"
@@ -89,37 +145,83 @@ const Login = () => {
             borderRadius="10rem"
             color="white"
           />
+
+          <Box mt="3rem" fontSize="1.6rem" textAlign="center" minWidth="100%">
+            <Button
+              isDisabled={loading}
+              onClick={handleSubmit}
+              type="submit"
+              fontSize="1.6rem"
+              px="1.7rem"
+              py="1.8rem"
+              bgColor="whiteAlpha.900"
+              _hover={{
+                bgColor: 'whiteAlpha.800',
+              }}
+              textColor="black"
+              w="100%"
+            >
+              Login
+            </Button>
+          </Box>
         </FormControl>
 
-        <Box mt="3rem" fontSize="1.6rem" textAlign="center" minWidth="100%">
-          <Button
-            type="submit"
-            fontSize="1.6rem"
-            px="1.7rem"
-            py="1.8rem"
-            bgColor="orange.600"
-            _hover={{
-              bgColor: 'orange.400',
-            }}
-          >
-            Login
-          </Button>
-          <Box mt="1rem" color="white">
-            <Text>
-              Don't have an account?{' '}
-              <Link to="/Login" color="#C05621">
-                Sign Up
-              </Link>
-            </Text>
-            <Text>
-              Forgot password?{' '}
-              <Link to="/Reset" color="#C05621">
-                Reset Password
-              </Link>
-            </Text>
-          </Box>
+        <Box
+          mt="2rem"
+          color="white"
+          fontSize="1.6rem"
+          textAlign="center"
+          minWidth="100%"
+        >
+          <ButtonGroup my="1rem" display="flex" flexDir="column">
+            <Button
+              isDisabled={loading}
+              onClick={handleGitHubSignin}
+              fontSize="1.6rem"
+              mb="2rem"
+              px="1.7rem"
+              py="1.8rem"
+              bgColor="whiteAlpha.900"
+              _hover={{
+                bgColor: 'whiteAlpha.700',
+              }}
+              textColor="black"
+            >
+              <DiGithubBadge /> Signin with Github
+            </Button>
+
+            <Button
+              isDisabled={loading}
+              onClick={handleGoogleSignin}
+              fontSize="1.6rem"
+              mx="0rem"
+              mb="2rem"
+              px="1.7rem"
+              py="1.8rem"
+              bgColor="whiteAlpha.900"
+              _hover={{
+                bgColor: 'whiteAlpha.800',
+              }}
+              textColor="black"
+            >
+              Sign in with Goggle
+            </Button>
+          </ButtonGroup>
+
+          <Text mb="1rem">
+            Don't have an account?{' '}
+            <Box as="span" textDecor="underline">
+              <Link to="/signup">Sign Up</Link>
+            </Box>
+          </Text>
+          <Text>
+            Forgot password?{' '}
+            <Box as="span" textDecor="underline">
+              <Link to="/Reset">Reset Password</Link>
+            </Box>
+          </Text>
         </Box>
-      </Container>
+      </Box>
     </Flex>
   );
 };
