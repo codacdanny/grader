@@ -37,7 +37,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await googleSignIn();
-      navigate('/home');
+      navigate('/');
     } catch (err) {
       setError(err.message);
     }
@@ -47,7 +47,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await gitHubSignIn();
-      navigate('/home');
+      navigate('/');
     } catch (err) {
       setError(err.message);
     }
@@ -59,7 +59,7 @@ const Login = () => {
     setloading(true);
     try {
       await login(email, password);
-      navigate('/home');
+      navigate('/');
     } catch (err) {
       setError(err.message);
     }
@@ -75,10 +75,12 @@ const Login = () => {
       h="100vh"
     >
       <Box
+        mx="auto"
         display="flex"
         className="card"
         p="3rem"
-        height="100%"
+        height="90%"
+        w="40%"
         flexDir="column"
         alignItems="center"
         justifyContent="center"
@@ -159,21 +161,21 @@ const Login = () => {
                 bgColor: 'whiteAlpha.800',
               }}
               textColor="black"
-              w="100%"
+              w="50%"
             >
               Login
             </Button>
           </Box>
         </FormControl>
 
-        <Box
-          mt="2rem"
-          color="white"
-          fontSize="1.6rem"
-          textAlign="center"
-          minWidth="100%"
-        >
-          <ButtonGroup my="1rem" display="flex" flexDir="column">
+        <Box mt="2rem" color="white" fontSize="1.6rem" textAlign="center">
+          <ButtonGroup
+            my="1rem"
+            display="flex"
+            flexDir="column"
+            justifyContent="center"
+            alignItems="center"
+          >
             <Button
               isDisabled={loading}
               onClick={handleGitHubSignin}
@@ -186,8 +188,9 @@ const Login = () => {
                 bgColor: 'whiteAlpha.700',
               }}
               textColor="black"
+              w="100%"
             >
-              <DiGithubBadge /> Signin with Github
+              <DiGithubBadge /> Sign in with Github
             </Button>
 
             <Button
@@ -195,6 +198,7 @@ const Login = () => {
               onClick={handleGoogleSignin}
               fontSize="1.6rem"
               mx="0rem"
+              marginInlineStart="0rem"
               mb="2rem"
               px="1.7rem"
               py="1.8rem"
@@ -203,6 +207,7 @@ const Login = () => {
                 bgColor: 'whiteAlpha.800',
               }}
               textColor="black"
+              w="100%"
             >
               Sign in with Goggle
             </Button>

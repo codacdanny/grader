@@ -37,6 +37,7 @@ const ResetPassword = () => {
     } catch (err) {
       setError(err.message);
     }
+    setloading(false);
   }
 
   return (
@@ -47,11 +48,12 @@ const ResetPassword = () => {
       h="100vh"
     >
       <Box
+        mx="auto"
         display="flex"
         className="card"
         p="3rem"
-        height="100%"
-        minW=""
+        height="90%"
+        w="40%"
         flexDir="column"
         alignItems="center"
         justifyContent="center"
@@ -110,12 +112,13 @@ const ResetPassword = () => {
               fontSize="1.6rem"
               px="1.7rem"
               py="1.8rem"
+              mt="2rem"
               bgColor="whiteAlpha.900"
               _hover={{
                 bgColor: 'whiteAlpha.800',
               }}
               textColor="black"
-              w="100%"
+              w="50%"
             >
               Reset
             </Button>
@@ -132,7 +135,7 @@ const ResetPassword = () => {
           <Text>
             Already have an account?{' '}
             <Box as="span" textDecor="underline">
-              <Link to="/">Login</Link>
+              <Link to="/login">Login</Link>
             </Box>
           </Text>
         </Box>

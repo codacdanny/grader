@@ -20,7 +20,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
               <Route
-                path="/home"
+                path="/"
                 element={
                   <ProtectedRoute>
                     {' '}
@@ -28,23 +28,16 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route
-                path="/"
-                element={
-                  <Dashboard />
-                  // <ProtectedRoute>
-                  //   {' '}
 
-                  // </ProtectedRoute>
-                }
-              />
+              <Route path="/home" element={<Dashboard />} />
+
               <Route
                 path="/reset"
                 element={
-                  <ResetPassword />
-                  // <ProtectedRoute>
-                  //   {' '}
-                  // </ProtectedRoute>
+                  <ProtectedRoute>
+                    {' '}
+                    <ResetPassword />
+                  </ProtectedRoute>
                 }
               />
             </Routes>

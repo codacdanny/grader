@@ -1,12 +1,15 @@
 import { Box, Button, Spacer, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Profile = () => {
+  const navigate = useNavigate();
   const { user, logOut } = useAuth();
   const handleLogout = async () => {
     try {
       await logOut();
+      navigate('/home');
     } catch (err) {
       console.log(err.message);
     }

@@ -10,12 +10,13 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  ButtonGroup,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import React, { useState } from 'react';
+import { DiGithubBadge } from 'react-icons/di';
 
-// import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useAuth } from '../context/AuthContext';
 const SignUp = () => {
   const [loading, setloading] = useState(false);
@@ -26,7 +27,27 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const { signup } = useAuth();
+  const { signup, googleSignIn, gitHubSignIn } = useAuth();
+
+  const handleGoogleSignin = async e => {
+    e.preventDefault();
+    try {
+      await googleSignIn();
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleGitHubSignin = async e => {
+    e.preventDefault();
+    try {
+      await gitHubSignIn();
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
@@ -53,10 +74,12 @@ const SignUp = () => {
       h="100vh"
     >
       <Box
+        mx="auto"
         display="flex"
         className="card"
         p="3rem"
-        height="100%"
+        height="95%"
+        w="40%"
         flexDir="column"
         alignItems="center"
         justifyContent="center"
@@ -160,24 +183,62 @@ const SignUp = () => {
                 bgColor: 'whiteAlpha.800',
               }}
               textColor="black"
-              w="100%"
+              w="50%"
             >
               SignUp
             </Button>
           </Box>
         </FormControl>
 
-        <Box
-          mt="2rem"
-          color="white"
-          fontSize="1.6rem"
-          textAlign="center"
-          minWidth="100%"
-        >
+        <Box mt="2rem" color="white" fontSize="1.6rem" textAlign="center">
+          <ButtonGroup
+            my="1rem"
+            display="flex"
+            flexDir="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Button
+              isDisabled={loading}
+              onClick={handleGitHubSignin}
+              fontSize="1.6rem"
+              mb="2rem"
+              px="1.7rem"
+              py="1.8rem"
+              bgColor="whiteAlpha.900"
+              _hover={{
+                bgColor: 'whiteAlpha.700',
+              }}
+              textColor="black"
+              w="100%"
+            >
+              <DiGithubBadge /> Sign in with Github
+            </Button>
+
+            <Button
+              isDisabled={loading}
+              onClick={handleGoogleSignin}
+              fontSize="1.6rem"
+              mx="0rem"
+              marginInlineStart="0rem"
+              mb="2rem"
+              px="1.7rem"
+              py="1.8rem"
+              bgColor="whiteAlpha.900"
+              _hover={{
+                bgColor: 'whiteAlpha.800',
+              }}
+              textColor="black"
+              w="100%"
+            >
+              Sign in with Goggle
+            </Button>
+          </ButtonGroup>
+
           <Text>
             Already have an account?{' '}
             <Box as="span" textDecor="underline">
-              <Link to="/">Login</Link>
+              <Link to="/login">Login</Link>
             </Box>
           </Text>
         </Box>
