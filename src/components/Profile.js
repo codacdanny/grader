@@ -17,9 +17,7 @@ const Profile = () => {
   };
   return (
     <Box as="main">
-      <Text>
-        Hello welcome {user && user.email} <Spacer />
-      </Text>
+      <Text>Hello welcome {user && user.email}</Text>
 
       <Button onClick={handleLogout}>Log Out</Button>
     </Box>

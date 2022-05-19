@@ -11,7 +11,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '../firebase';
 
-const userAuthContext = createContext();
+export const userAuthContext = createContext();
 
 export function UserAuthProvider({ children }) {
   const [user, setUser] = useState('');
@@ -41,13 +41,12 @@ export function UserAuthProvider({ children }) {
     return sendPasswordResetEmail(auth, email);
   }
   useEffect(() => {
-    // const unsubscribe = onAuthStateChanged(auth, currentUser => {
-    //   console.log(currentUser);
-    console.log('sam');
-    setUser('sammy');
-    // });
+    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+      console.log('custom hook');
 
-    // return () => unsubscribe(); //doing this to clean up the use effect to avoid memory leakage
+      setUser(currentUser);
+    });
+    return () => unsubscribe(); //doing this to clean up the use effect to avoid memory leakage
   });
 
   return (
@@ -70,4 +69,5 @@ export function UserAuthProvider({ children }) {
 export function useAuth() {
   return useContext(userAuthContext);
 }
+
 export default UserAuthProvider;

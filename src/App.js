@@ -28,7 +28,7 @@ function App() {
                 }
               />
 
-              <Route path="/home" element={<HomePage />} />
+              {/* <Route path="/home" element={<HomePage />} /> */}
 
               <Route
                 path="/reset"
