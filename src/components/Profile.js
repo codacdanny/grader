@@ -10,7 +10,8 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       await logOut();
-      navigate('/home');
+      localStorage.removeItem('login');
+      navigate('/');
     } catch (err) {
       console.log(err.message);
     }

@@ -7,7 +7,11 @@ const ProtectedRoute = ({ children }) => {
   // const navigate = useNavigate();
   let { user } = useAuth();
 
-  return user ? children : <HomePage />;
+  return user || localStorage.getItem('login') === 'true' ? (
+    children
+  ) : (
+    <HomePage />
+  );
 };
 
 export default ProtectedRoute;

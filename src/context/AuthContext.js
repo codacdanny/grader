@@ -43,7 +43,7 @@ export function UserAuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       console.log('custom hook');
-
+      if (currentUser) localStorage.setItem('login', true);
       setUser(currentUser);
     });
     return () => unsubscribe(); //doing this to clean up the use effect to avoid memory leakage
