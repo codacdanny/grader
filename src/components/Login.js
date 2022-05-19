@@ -28,7 +28,6 @@ const Login = () => {
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const navigate = useNavigate();
 
   const { login, googleSignIn, gitHubSignIn } = useAuth();
@@ -37,6 +36,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await googleSignIn();
+
       navigate('/');
     } catch (err) {
       setError(err.message);

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import svg from '../undraw_calculator_re_alsc.svg';
 
-const Dashboard = () => {
+const HomePage = () => {
   return (
     <Box mx="auto">
       <Heading as="h1" m="2rem" color="white">
@@ -69,4 +69,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default HomePage;

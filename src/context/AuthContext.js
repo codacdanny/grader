@@ -20,6 +20,7 @@ export function UserAuthProvider({ children }) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
   function login(email, password) {
+    console.log('singin in');
     return signInWithEmailAndPassword(auth, email, password);
   }
   function logOut() {
@@ -40,12 +41,14 @@ export function UserAuthProvider({ children }) {
     return sendPasswordResetEmail(auth, email);
   }
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
-      setUser(currentUser);
-    });
+    // const unsubscribe = onAuthStateChanged(auth, currentUser => {
+    //   console.log(currentUser);
+    console.log('sam');
+    setUser('sammy');
+    // });
 
-    return () => unsubscribe(); //doing this to clean up the use effect to avoid memory leakage
-  }, []);
+    // return () => unsubscribe(); //doing this to clean up the use effect to avoid memory leakage
+  });
 
   return (
     <userAuthContext.Provider
@@ -59,17 +62,10 @@ export function UserAuthProvider({ children }) {
         passwordReset,
       }}
     >
-      {' '}
-      {children}{' '}
+      {children}
     </userAuthContext.Provider>
   );
 }
-
-//   //   function signUp(email, password) {
-//   //     return createUserWithEmailAndPassword(auth, email, password);
-//   //   }
-
-//
 
 export function useAuth() {
   return useContext(userAuthContext);

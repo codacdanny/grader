@@ -7,7 +7,7 @@ import UserAuthProvider from './context/AuthContext';
 import Profile from './components/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 import ResetPassword from './components/ResetPassword';
-import Dashboard from './components/Dashboard';
+import HomePage from './components/HomePage';
 // import theme from './theme';
 
 function App() {
@@ -23,13 +23,12 @@ function App() {
                 path="/"
                 element={
                   <ProtectedRoute>
-                    {' '}
                     <Profile />
                   </ProtectedRoute>
                 }
               />
 
-              <Route path="/home" element={<Dashboard />} />
+              <Route path="/home" element={<HomePage />} />
 
               <Route
                 path="/reset"

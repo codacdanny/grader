@@ -1,13 +1,18 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-const ProtectedRoute = ({ children }) => {
-  let { user } = useAuth();
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import Profile from './Profile';
+import HomePage from './HomePage';
 
-  if (!user) {
-    return <Navigate to="/home" />;
-  }
-  return children;
+const ProtectedRoute = ({ children }) => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  console.log(`user is ${user}`);
+  // let [user, setUser] = useState('');
+  // console.log(myUser);
+  return user ? children : <Navigate to="/home" />;
 };
 
 export default ProtectedRoute;
