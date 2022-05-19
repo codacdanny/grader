@@ -1,4 +1,4 @@
-import { Box, Button, Spacer, Text } from '@chakra-ui/react';
+import { Box, Button, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';

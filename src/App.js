@@ -7,7 +7,7 @@ import UserAuthProvider from './context/AuthContext';
 import Profile from './components/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 import ResetPassword from './components/ResetPassword';
-import HomePage from './components/HomePage';
+//import HomePage from './components/HomePage';
 // import theme from './theme';
 
 function App() {
