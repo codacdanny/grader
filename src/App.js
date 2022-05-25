@@ -30,15 +30,7 @@ function App() {
 
               {/* <Route path="/home" element={<HomePage />} /> */}
 
-              <Route
-                path="/reset"
-                element={
-                  <ProtectedRoute>
-                    {' '}
-                    <ResetPassword />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/reset" element={<ResetPassword />} />
             </Routes>
           </Box>
         </Box>

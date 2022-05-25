@@ -222,7 +222,7 @@ const Login = () => {
           <Text>
             Forgot password?{' '}
             <Box as="span" textDecor="underline">
-              <Link to="/Reset">Reset Password</Link>
+              <Link to="/reset">Reset Password</Link>
             </Box>
           </Text>
         </Box>
