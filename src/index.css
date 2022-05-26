@@ -8,13 +8,26 @@
 html {
   font-size: 62.5%;
 }
-body {
+/* body {
   background-color: #080808 !important;
-  max-width: unset !important;
-}
+} */
 
 .card {
   border-radius: 22px;
   background: #161616;
   box-shadow: 7px 7px 29px #262525, -7px -7px 29px #2c2b2b;
+  color: #a8a6ce;
 }
+/* select {
+  width: 30%;
+  background-color: #6c63ff;
+  text-align: center;
+  padding: 2rem;
+
+  border: none;
+  outline: none;
+}
+
+option {
+  font-size: 1.9rem;
+} */

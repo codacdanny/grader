@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChakraProvider, Box, theme } from '@chakra-ui/react';
+import { ChakraProvider, Box } from '@chakra-ui/react';
 import Login from './components/Login';
 import { Route, Routes } from 'react-router-dom';
 import SignUp from './components/SignUp';
@@ -7,8 +7,9 @@ import UserAuthProvider from './context/AuthContext';
 import Profile from './components/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 import ResetPassword from './components/ResetPassword';
+import Semester from './components/Semester';
 //import HomePage from './components/HomePage';
-// import theme from './theme';
+import theme from './theme';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               {/* <Route path="/home" element={<HomePage />} /> */}
 
               <Route path="/reset" element={<ResetPassword />} />
+              <Route path="/semester" element={<Semester />} />
             </Routes>
           </Box>
         </Box>
