@@ -1,13 +1,14 @@
-import { Box, Button, Flex, Heading, Input, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { useHandler } from '../context/StateHandler';
+import Year from './Year';
 
 const Profile = () => {
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
-  console.log('navigated');
+  const { items, addItem } = useHandler();
   const handleLogout = async () => {
     try {
       await logOut();
@@ -17,6 +18,7 @@ const Profile = () => {
       console.log(err.message);
     }
   };
+
   return (
     <Box as="main" mx="auto" textColor="white">
       <Flex
@@ -37,7 +39,7 @@ const Profile = () => {
         </Button>
       </Flex>
 
-      <Box mt="2rem" textAlign="center">
+      <Box my="2rem" textAlign="center">
         <Text fontSize="1.6rem" mb=".5rem">
           Hello welcome {user && user.email}
         </Text>
@@ -49,63 +51,23 @@ const Profile = () => {
         display="flex"
         maxWidth="800px"
         // p="3rem"
-        height="50vh"
+        height="100%"
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
       >
-        <Box
-          bgColor="#6c63ff"
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          w="70%"
-          p="1.5rem"
-          mb="3rem"
-          borderRadius="1rem"
-        >
-          <Input
-            type="text"
-            placeholder="First year"
-            variant="flushed"
-            p="2rem"
-            fontSize="1.9rem"
-            borderRadius="1rem"
-            textColor="white"
-            width="30%"
-            _placeholder={{
-              opacity: '0.6',
-              color: 'white',
-              fontWeight: '300',
-            }}
-          />
+        {items.map(item => (
+          <Year item={item} key={item.id} />
+        ))}
 
-          <Flex columnGap=".7rem" alignItems="center">
-            <Link to="/semester">
-              <Button
-                p="2rem"
-                fontSize="1.9rem"
-                borderRadius="1rem"
-                textColor="black"
-              >
-                Open
-              </Button>
-            </Link>
-            <Button
-              fontSize="2.5rem"
-              py="2rem"
-              color="red.400"
-              borderRadius="1rem"
-            >
-              <RiDeleteBin2Fill />
-            </Button>
-          </Flex>
-        </Box>
         <Button
           p="2rem"
           fontSize="1.9rem"
           borderRadius="1rem"
           textColor="black"
+          // newItem={newItem}
+          // setNewItem={setNewItem}
+          onClick={addItem}
         >
           Add year
         </Button>

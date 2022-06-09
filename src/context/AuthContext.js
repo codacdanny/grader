@@ -20,7 +20,6 @@ export function UserAuthProvider({ children }) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
   function login(email, password) {
-    console.log('singin in');
     return signInWithEmailAndPassword(auth, email, password);
   }
   function logOut() {
@@ -42,7 +41,6 @@ export function UserAuthProvider({ children }) {
   }
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
-      console.log('custom hook');
       if (currentUser) localStorage.setItem('login', true);
       setUser(currentUser);
     });
@@ -71,3 +69,4 @@ export function useAuth() {
 }
 
 export default UserAuthProvider;
+// export default FavoritesContext;

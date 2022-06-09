@@ -1,13 +1,4 @@
 import { extendTheme } from '@chakra-ui/react';
-//  const customTheme = extendTheme(
-//   withDefaultColorScheme({
-//     colorScheme: 'red',
-//     components: ['Select'],
-//   })
-// );
-
-// theme.js
-// import { extendTheme } from '@chakra-ui/react'
 
 // Version 1: Using objects
 const theme = extendTheme({

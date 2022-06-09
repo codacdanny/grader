@@ -10,32 +10,35 @@ import ResetPassword from './components/ResetPassword';
 import Semester from './components/Semester';
 //import HomePage from './components/HomePage';
 import theme from './theme';
+import StateHandler from './context/StateHandler';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <UserAuthProvider>
-        <Box mx="auto" overflowX="hidden">
-          <Box>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                }
-              />
+        <StateHandler>
+          <Box mx="auto" overflowX="hidden">
+            <Box>
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
 
-              {/* <Route path="/home" element={<HomePage />} /> */}
+                {/* <Route path="/home" element={<HomePage />} /> */}
 
-              <Route path="/reset" element={<ResetPassword />} />
-              <Route path="/semester" element={<Semester />} />
-            </Routes>
+                <Route path="/reset" element={<ResetPassword />} />
+                <Route path="/semester" element={<Semester />} />
+              </Routes>
+            </Box>
           </Box>
-        </Box>
+        </StateHandler>
       </UserAuthProvider>
     </ChakraProvider>
   );
