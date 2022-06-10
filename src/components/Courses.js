@@ -1,11 +1,13 @@
 import { Box, Button, Input, Select } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 import { useHandler } from '../context/StateHandler';
 
 const Courses = ({ course }) => {
   const { handleDeleteCourse } = useHandler();
-
+  const [grade, setGrade] = useState('');
+  const [courseTitle, setCourseTitle] = useState('');
+  const [unitPoint, setUnitPoint] = useState('');
   return (
     <Box
       bgColor="#6c63ff"
@@ -26,6 +28,8 @@ const Courses = ({ course }) => {
         borderRadius="1rem"
         textColor="white"
         width="35%"
+        value={courseTitle}
+        onChange={e => setCourseTitle(e.target.value)}
         _placeholder={{
           opacity: '0.5',
           color: 'white',
@@ -33,7 +37,7 @@ const Courses = ({ course }) => {
         }}
       />
       <Select
-        placeholder=""
+        placeholder="a"
         borderRadius="1rem"
         textColor="black"
         fontWeight="medium"
@@ -43,25 +47,16 @@ const Courses = ({ course }) => {
         p="1rem"
         fontSize="1.9rem"
         variant="flushed"
+        value={grade}
+        onChange={e => setGrade(e.target.value)}
       >
-        <option value="A" bg="green">
-          A
-        </option>
+        <option value="A">A</option>
         <option value="B">B</option>
         <option value="C">C</option>
         <option value="D">D</option>
         <option value="E">E</option>
         <option value="F">F</option>
       </Select>
-
-      {/* <select>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="E">E</option>
-            <option value="F">F</option>
-          </select> */}
 
       <Input
         type="number"
@@ -72,6 +67,8 @@ const Courses = ({ course }) => {
         borderRadius="1rem"
         textColor="white"
         width="25%"
+        value={unitPoint}
+        onChange={e => setUnitPoint(e.target.value)}
         _placeholder={{
           opacity: '0.6',
           color: 'white',

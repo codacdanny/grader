@@ -1,8 +1,48 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useReducer } from 'react';
 
-export const stateContext = createContext();
+// const ACTIONS = {
+//   ADD_ITEM: 'addItem',
+//   DELETE_ITEM: 'handleDelete',
+// };
+// function reducer(state, action) {
+//   switch (action.type) {
+//     case ACTIONS.ADD_ITEM:
+//       const id = items.length ? items[items.length - 1].id + 1 : 1;
+//       const myNewItem = { id, item };
+//       const listItems = [...items, myNewItem];
+//       return setAndSaveItems(listItems);
+
+//     default:
+//       break;
+//   }
+// }
+
+// const [state, dispatch] = useReducer(reducer, initialState);
+
+const stateContext = createContext();
 
 const StateHandler = ({ children }) => {
+  // const ACTIONS = {
+  //   ADD_ITEM: 'addItem',
+  //   DELETE_ITEM: 'handleDelete',
+  // };
+  // function reducer(state, action) {
+  //   switch (action.type) {
+  //     case ACTIONS.ADD_ITEM:
+  //       const setAndSaveItems = newItems => {
+  //         setItems(newItems);
+  //         localStorage.setItem('shoppinglist', JSON.stringify(newItems));
+  //       };
+  //       const id = items.length ? items[items.length - 1].id + 1 : 1;
+  //       const myNewItem = { id, item };
+  //       const listItems = [...items, myNewItem];
+  //       return setAndSaveItems(listItems);
+
+  //     default:
+  //       break;
+  //   }
+  // }
+
   const [items, setItems] = useState([
     {
       id: 1,
@@ -13,19 +53,18 @@ const StateHandler = ({ children }) => {
   const [courses, setCourses] = useState([
     {
       id: 1,
-      course: 'Course101',
-      grade: 'A',
-      unit: 3,
+      course: '',
+      grade: '',
+      unit: null,
     },
   ]);
 
   const addCourse = course => {
     const id = courses.length ? courses[courses.length - 1].id + 1 : 1;
-    const myNewCourse = { id, course, grade: 'b', unit: 2 };
+    const myNewCourse = { id, course, grade: '', unit: null };
 
     const listCourse = [...courses, myNewCourse];
     setAndSaveCourses(listCourse);
-
     console.log(courses);
   };
   const addItem = item => {
@@ -34,8 +73,6 @@ const StateHandler = ({ children }) => {
     const listItems = [...items, myNewItem];
     setAndSaveItems(listItems);
   };
-
-  // const [newItem, setNewItem] = useState('');
 
   const setAndSaveItems = newItems => {
     setItems(newItems);
@@ -46,13 +83,6 @@ const StateHandler = ({ children }) => {
     localStorage.setItem('school', JSON.stringify(newCourses));
   };
 
-  // const handleCheck = id => {
-  //   const listItems = items.map(item =>
-  //     item.id === id ? { ...item, checked: !item.checked } : item
-  //   );
-  //   setAndSaveItems(listItems);
-  // };
-
   const handleDelete = id => {
     const listItems = items.filter(item => item.id !== id);
     setAndSaveItems(listItems);
@@ -62,19 +92,11 @@ const StateHandler = ({ children }) => {
     setAndSaveCourses(listCourse);
   };
 
-  // const handleSubmit = e => {
-  //   if (!newItem) return;
-  //   addItem(newItem);
-  //   setNewItem('');
-  // };
-
   return (
     <stateContext.Provider
       value={{
-        // newItem,
-        // setNewItem,
         addItem,
-        // handleSubmit,
+
         handleDelete,
         handleDeleteCourse,
         items,
@@ -83,6 +105,7 @@ const StateHandler = ({ children }) => {
         courses,
         addCourse,
         setAndSaveCourses,
+        setCourses,
       }}
     >
       {children}

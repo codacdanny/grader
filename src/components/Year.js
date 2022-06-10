@@ -1,12 +1,12 @@
 import { Box, Button, Flex, Input } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 import { useHandler } from '../context/StateHandler';
 
 const Year = ({ item }) => {
   const { handleDelete } = useHandler();
-
+  const [semesterName, setSemesterName] = useState('');
   return (
     <Box
       bgColor="#6c63ff"
@@ -20,7 +20,7 @@ const Year = ({ item }) => {
     >
       <Input
         type="text"
-        placeholder="First year"
+        placeholder="First Semester"
         variant="flushed"
         p="2rem"
         fontSize="1.9rem"
@@ -28,8 +28,8 @@ const Year = ({ item }) => {
         textColor="white"
         width="30%"
         required
-        // value={newItem}
-        // onChange={e => setNewItem(e.target.value)}
+        value={semesterName}
+        onChange={e => setSemesterName(e.target.value)}
         _placeholder={{
           opacity: '0.6',
           color: 'white',
