@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, useReducer } from 'react';
+import React, { createContext, useContext, useState } from 'react';
+
+/// IMPORT USEREDUCER FIRST
 
 // const ACTIONS = {
 //   ADD_ITEM: 'addItem',
