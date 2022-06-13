@@ -1,56 +1,77 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useReducer } from 'react';
 
 /// IMPORT USEREDUCER FIRST
 
-// const ACTIONS = {
-//   ADD_ITEM: 'addItem',
-//   DELETE_ITEM: 'handleDelete',
-// };
-// function reducer(state, action) {
-//   switch (action.type) {
-//     case ACTIONS.ADD_ITEM:
-//       const id = items.length ? items[items.length - 1].id + 1 : 1;
-//       const myNewItem = { id, item };
-//       const listItems = [...items, myNewItem];
-//       return setAndSaveItems(listItems);
-
-//     default:
-//       break;
-//   }
-// }
-
-// const [state, dispatch] = useReducer(reducer, initialState);
-
 const stateContext = createContext();
+const setAndSaveItems = newItems => {
+  // setItems(newItems);
+  localStorage.setItem('shoppinglist', JSON.stringify(newItems));
+};
+export const ACTIONS = {
+  ADD_SEMESTER: 'addSemester',
+  DELETE_ITEM: 'handleDelete',
+  ADD_COURSE: 'addCourse',
+  SAVE_COURSE: 'saveCourse',
+};
+function reducer(items, action) {
+  let local = getLocal();
+  switch (action.type) {
+    case ACTIONS.ADD_SEMESTER:
+      const id = items.length ? items[items.length - 1].id + 1 : 1;
 
+      const myNewItem = { id, course_and_score: {} };
+      const listItems = [...items, myNewItem];
+      setAndSaveItems(listItems);
+      return listItems;
+    case ACTIONS.SAVE_COURSE:
+      let data = action.value;
+     let courseEdit =  local.find(item => item.id === data.semesterId).course_and_score.find(item=>item.id===data.key)
+      courseEdit =  {
+          courseTitle: data.courseTitle,
+          grade: data.grade,
+          id:data.key
+        };
+
+      setAndSaveItems(local);
+      return local;
+    case ACTIONS.ADD_COURSE:
+      let semesterId = action.value.semesterId;
+      let semester = local.find(x => x.id === semesterId).course_and_score;
+
+      let semesterArray = Object.keys(semester); 
+      if (semesterArray.length === 0) {
+        semester={
+          1:
+        }
+      }
+
+    default:
+      break;
+  }
+}
+function getLocal() {
+  return JSON.parse(localStorage.getItem('shoppinglist'));
+}
 const StateHandler = ({ children }) => {
-  // const ACTIONS = {
-  //   ADD_ITEM: 'addItem',
-  //   DELETE_ITEM: 'handleDelete',
-  // };
-  // function reducer(state, action) {
-  //   switch (action.type) {
-  //     case ACTIONS.ADD_ITEM:
-  //       const setAndSaveItems = newItems => {
-  //         setItems(newItems);
-  //         localStorage.setItem('shoppinglist', JSON.stringify(newItems));
-  //       };
-  //       const id = items.length ? items[items.length - 1].id + 1 : 1;
-  //       const myNewItem = { id, item };
-  //       const listItems = [...items, myNewItem];
-  //       return setAndSaveItems(listItems);
-
-  //     default:
-  //       break;
-  //   }
-  // }
-
-  const [items, setItems] = useState([
+  const init = [
     {
       id: 1,
-      item: 'year1',
+      result: [
+        {id:1,
+          courseTtle: 'math101',
+          grade: 'A',
+        },
+
+         { id: 2,
+          courseTtle: 'bio101',
+          grade: 'A',
+        },
+      ],
     },
-  ]);
+  ];
+  const newInit = getLocal(); // we have to change this i think!!
+  const initState = newInit === null ? init : newInit; // I thimk we should rewrite this too since we have the getLocal fn
+  const [items, dispatch] = React.useReducer(reducer, initState);
 
   const [courses, setCourses] = useState([
     {
@@ -61,25 +82,21 @@ const StateHandler = ({ children }) => {
     },
   ]);
 
-  const addCourse = course => {
-    const id = courses.length ? courses[courses.length - 1].id + 1 : 1;
-    const myNewCourse = { id, course, grade: '', unit: null };
+  // const addCourse = course => {
+  //   const id = courses.length ? courses[courses.length - 1].id + 1 : 1;
+  //   const myNewCourse = { id, course, grade: '', unit: null };
 
-    const listCourse = [...courses, myNewCourse];
-    setAndSaveCourses(listCourse);
-    console.log(courses);
-  };
-  const addItem = item => {
-    const id = items.length ? items[items.length - 1].id + 1 : 1;
-    const myNewItem = { id, item };
-    const listItems = [...items, myNewItem];
-    setAndSaveItems(listItems);
-  };
+  //   const listCourse = [...courses, myNewCourse];
+  //   setAndSaveCourses(listCourse);
+  //   console.log(courses);
+  // };
+  // const addItem = item => {
+  //   const id = items.length ? items[items.length - 1].id + 1 : 1;
+  //   const myNewItem = { id, item };
+  //   const listItems = [...items, myNewItem];
+  //   setAndSaveItems(listItems);
+  // };
 
-  const setAndSaveItems = newItems => {
-    setItems(newItems);
-    localStorage.setItem('shoppinglist', JSON.stringify(newItems));
-  };
   const setAndSaveCourses = newCourses => {
     setCourses(newCourses);
     localStorage.setItem('school', JSON.stringify(newCourses));
@@ -87,7 +104,7 @@ const StateHandler = ({ children }) => {
 
   const handleDelete = id => {
     const listItems = items.filter(item => item.id !== id);
-    setAndSaveItems(listItems);
+    // setAndSaveItems(listItems);
   };
   const handleDeleteCourse = id => {
     const listCourse = courses.filter(course => course.id !== id);
@@ -97,13 +114,13 @@ const StateHandler = ({ children }) => {
   return (
     <stateContext.Provider
       value={{
-        addItem,
-
+        // addItem,
+        dispatch,
         handleDelete,
         handleDeleteCourse,
         items,
-        setItems,
-        setAndSaveItems,
+        // setItems,
+        // setAndSaveItems,
         courses,
         addCourse,
         setAndSaveCourses,

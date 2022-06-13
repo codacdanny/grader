@@ -2,13 +2,13 @@ import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useHandler } from '../context/StateHandler';
+import { ACTIONS, useHandler } from '../context/StateHandler';
 import Year from './Year';
 
 const Profile = () => {
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
-  const { items, addItem } = useHandler();
+  const { items, dispatch } = useHandler();
   const handleLogout = async () => {
     try {
       await logOut();
@@ -17,6 +17,11 @@ const Profile = () => {
     } catch (err) {
       console.log(err.message);
     }
+  };
+  const addItem = e => {
+    dispatch({
+      type: ACTIONS.ADD_SEMESTER,
+    });
   };
 
   return (

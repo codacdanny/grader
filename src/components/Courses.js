@@ -1,13 +1,26 @@
 import { Box, Button, Input, Select } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
-import { useHandler } from '../context/StateHandler';
+import { ACTIONS, useHandler } from '../context/StateHandler';
 
-const Courses = ({ course }) => {
-  const { handleDeleteCourse } = useHandler();
-  const [grade, setGrade] = useState('');
-  const [courseTitle, setCourseTitle] = useState('');
+const Courses = ({ key, course, grade, semesterId }) => {
+  const { handleDeleteCourse, dispatch } = useHandler();
+
+  const [courseTitle, setCourseTitle] = useState(course);
   const [unitPoint, setUnitPoint] = useState('');
+  let setDispatch = grade => {
+    if (courseTitle != '') {
+      dispatch({
+        type: ACTIONS.SAVE_COURSE,
+        value: {
+          semesterId,
+          courseTitle,
+          grade,
+          key,
+        },
+      });
+    }
+  };
   return (
     <Box
       bgColor="#6c63ff"
@@ -37,7 +50,7 @@ const Courses = ({ course }) => {
         }}
       />
       <Select
-        placeholder="a"
+        placeholder=""
         borderRadius="1rem"
         textColor="black"
         fontWeight="medium"
@@ -48,7 +61,7 @@ const Courses = ({ course }) => {
         fontSize="1.9rem"
         variant="flushed"
         value={grade}
-        onChange={e => setGrade(e.target.value)}
+        onChange={e => setDispatch(e.target.value)}
       >
         <option value="A">A</option>
         <option value="B">B</option>

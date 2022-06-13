@@ -20,7 +20,7 @@ const Year = ({ item }) => {
     >
       <Input
         type="text"
-        placeholder="First Semester"
+        placeholder={'Semester ' + item.id}
         variant="flushed"
         p="2rem"
         fontSize="1.9rem"
