@@ -11,9 +11,19 @@ const Semester = () => {
   const { id } = useParams();
   const { user, logOut } = useAuth();
   let semesterId = parseInt(id);
-  const { items, dispatch } = useHandler();
-  console.log(items);
 
+  const { items, dispatch } = useHandler();
+  //console.log(items);
+  let list = items.find(x => x.semesterId === semesterId);
+  function addCourses() {
+    console.log('add my courses');
+    dispatch({
+      type: TYPES.ADD_COURSE,
+      value: {
+        semesterId,
+      },
+    });
+  }
   const handleLogout = async () => {
     try {
       await logOut();
@@ -89,7 +99,7 @@ const Semester = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        {items[semesterId].result.map(
+        {list.result.map(
           (
             item // i changed this line
           ) => (
@@ -98,7 +108,7 @@ const Semester = () => {
               courseId={item.courseId}
               grade={item.grade}
               courseName={item.courseName}
-              semesterId
+              semesterId={semesterId}
             />
           )
         )}
@@ -108,14 +118,7 @@ const Semester = () => {
           fontSize="1.9rem"
           borderRadius="1rem"
           textColor="black"
-          onClick={() =>
-            dispatch({
-              type: TYPES.ADD_COURSE,
-              value: {
-                semesterId,
-              },
-            })
-          }
+          onClick={addCourses}
         >
           Add Course
         </Button>

@@ -2,8 +2,8 @@ export const TYPES = {
   ADD_SEMESTER: 'addsemester',
   EDIT_SEMESTER: 'editsemester',
   DELETE_SEMESTER: 'deletesemester',
-  ADD_COURSE: 'savecourse',
-  EDIT_COURSE: 'addcourse',
+  ADD_COURSE: 'addcourse',
+  EDIT_COURSE: 'editcourse',
   DELETE_COURSE: 'deletecourse',
 };
 
@@ -20,7 +20,7 @@ function getNewSemesterId(data) {
 function getNewCourseId(data, semesterId) {
   let courseIds = [];
 
-  let semester = data.find(item => item.id === semesterId);
+  let semester = data.find(item => item.semesterId === semesterId);
   if (semester.result.length === 0) return 1;
   semester.result.forEach(course => {
     courseIds.push(course.courseId);
@@ -69,19 +69,21 @@ function reducer(state, action) {
       );
       return saveLocal(semester);
     case TYPES.ADD_COURSE:
+      console.log('chicken');
       newCourseId = getNewCourseId(state, action.value.semesterId);
       newState = [...state];
       semester = state.find(
         item => item.semesterId === action.value.semesterId
       );
+      console.log(semester);
       semester.result.push({
         courseId: newCourseId,
-        newCourseName: 'Course' + newCourseId,
+        courseName: 'Course' + newCourseId,
         grade: 'A',
       });
       return saveLocal(newState);
     case TYPES.EDIT_COURSE:
-      newState = [...newState];
+      newState = [...state];
       semester = newState.find(
         item => item.semesterId === action.value.semesterId
       );
@@ -93,7 +95,8 @@ function reducer(state, action) {
       return saveLocal(newState);
 
     case TYPES.DELETE_COURSE:
-      newState = [...newState];
+      newState = [...state];
+
       semester = newState.find(
         item => item.semesterId === action.value.semesterId
       );

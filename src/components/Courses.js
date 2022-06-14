@@ -8,6 +8,7 @@ const Courses = ({ courseId, grade, semesterId, courseName }) => {
   const { dispatch } = useHandler();
 
   function deleteCourse() {
+    console.log('mysemesterId', semesterId);
     dispatch({
       type: TYPES.DELETE_COURSE,
       value: {
