@@ -2,22 +2,18 @@ import React from 'react';
 import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ACTIONS, useHandler } from '../context/StateHandler';
+import { useHandler } from '../context/StateHandler';
 import Courses from './Courses';
+import { TYPES } from '../context/Reducer';
 
 const Semester = () => {
   const navigate = useNavigate();
-  const { id: semesterId } = useParams();
+  const { id } = useParams();
   const { user, logOut } = useAuth();
-
+  let semesterId = parseInt(id);
   const { items, dispatch } = useHandler();
   console.log(items);
 
-  let findResults = items.find(
-    x => x.id === parseInt(semesterId)
-  )?.result;
-
-  let courses =;
   const handleLogout = async () => {
     try {
       await logOut();
@@ -93,14 +89,19 @@ const Semester = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        {courses.map(item => (
-          <Courses
-            key={item.key}
-            grade={item.value.grade}
-            course={item.value.courseTitle}
-            semesterId
-          />
-        ))}
+        {items[semesterId].result.map(
+          (
+            item // i changed this line
+          ) => (
+            <Courses
+              key={item.courseId}
+              courseId={item.courseId}
+              grade={item.grade}
+              courseName={item.courseName}
+              semesterId
+            />
+          )
+        )}
 
         <Button
           p="2rem"
@@ -109,7 +110,7 @@ const Semester = () => {
           textColor="black"
           onClick={() =>
             dispatch({
-              type: ACTIONS.ADD_COURSE,
+              type: TYPES.ADD_COURSE,
               value: {
                 semesterId,
               },

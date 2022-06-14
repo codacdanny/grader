@@ -1,26 +1,46 @@
 import { Box, Button, Input, Select } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
-import { ACTIONS, useHandler } from '../context/StateHandler';
+import { TYPES } from '../context/Reducer';
+import { useHandler } from '../context/StateHandler';
 
-const Courses = ({ key, course, grade, semesterId }) => {
-  const { handleDeleteCourse, dispatch } = useHandler();
+const Courses = ({ courseId, grade, semesterId, courseName }) => {
+  const { dispatch } = useHandler();
 
-  const [courseTitle, setCourseTitle] = useState(course);
-  const [unitPoint, setUnitPoint] = useState('');
-  let setDispatch = grade => {
-    if (courseTitle != '') {
-      dispatch({
-        type: ACTIONS.SAVE_COURSE,
-        value: {
-          semesterId,
-          courseTitle,
-          grade,
-          key,
-        },
-      });
-    }
-  };
+  function deleteCourse() {
+    dispatch({
+      type: TYPES.DELETE_COURSE,
+      value: {
+        semesterId,
+        courseId,
+      },
+    });
+  }
+
+  function editCourseName(e) {
+    dispatch({
+      type: TYPES.EDIT_COURSE,
+      value: {
+        semesterId,
+        courseId,
+        courseName: e.target.value,
+        grade,
+      },
+    });
+  }
+
+  function editCourseGrade(e) {
+    dispatch({
+      type: TYPES.EDIT_COURSE,
+      value: {
+        semesterId,
+        courseId,
+        courseName,
+        grade: e.target.value,
+      },
+    });
+  }
+
   return (
     <Box
       bgColor="#6c63ff"
@@ -41,8 +61,8 @@ const Courses = ({ key, course, grade, semesterId }) => {
         borderRadius="1rem"
         textColor="white"
         width="35%"
-        value={courseTitle}
-        onChange={e => setCourseTitle(e.target.value)}
+        value={courseName}
+        onChange={editCourseName}
         _placeholder={{
           opacity: '0.5',
           color: 'white',
@@ -61,7 +81,7 @@ const Courses = ({ key, course, grade, semesterId }) => {
         fontSize="1.9rem"
         variant="flushed"
         value={grade}
-        onChange={e => setDispatch(e.target.value)}
+        onChange={editCourseGrade}
       >
         <option value="A">A</option>
         <option value="B">B</option>
@@ -71,7 +91,7 @@ const Courses = ({ key, course, grade, semesterId }) => {
         <option value="F">F</option>
       </Select>
 
-      <Input
+      {/* <Input
         type="number"
         placeholder="unit points"
         variant="flushed"
@@ -87,14 +107,14 @@ const Courses = ({ key, course, grade, semesterId }) => {
           color: 'white',
           fontWeight: '300',
         }}
-      />
+      /> */}
       <Button
         fontSize="2.5rem"
         py="2rem"
         color="black"
         borderRadius="1rem"
         aria-label="delete item"
-        onClick={() => handleDeleteCourse(course.id)}
+        onClick={deleteCourse}
         _hover={{
           color: 'red.400',
         }}

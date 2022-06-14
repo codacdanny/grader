@@ -2,7 +2,8 @@ import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ACTIONS, useHandler } from '../context/StateHandler';
+import { TYPES } from '../context/Reducer';
+import { useHandler } from '../context/StateHandler';
 import Year from './Year';
 
 const Profile = () => {
@@ -18,9 +19,9 @@ const Profile = () => {
       console.log(err.message);
     }
   };
-  const addItem = e => {
+  const addSemester = () => {
     dispatch({
-      type: ACTIONS.ADD_SEMESTER,
+      type: TYPES.ADD_SEMESTER,
     });
   };
 
@@ -62,7 +63,11 @@ const Profile = () => {
         flexDirection="column"
       >
         {items.map(item => (
-          <Year item={item} key={item.id} />
+          <Year
+            key={item.semesterId}
+            semesterName={item.semesterName}
+            semesterId={item.semesterId}
+          />
         ))}
 
         <Button
@@ -72,7 +77,7 @@ const Profile = () => {
           textColor="black"
           // newItem={newItem}
           // setNewItem={setNewItem}
-          onClick={addItem}
+          onClick={addSemester}
         >
           Add year
         </Button>

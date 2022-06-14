@@ -1,12 +1,31 @@
 import { Box, Button, Flex, Input } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 import { useHandler } from '../context/StateHandler';
+import { TYPES } from '../context/Reducer';
 
-const Year = ({ item }) => {
-  const { handleDelete } = useHandler();
-  const [semesterName, setSemesterName] = useState('');
+const Year = ({ semesterId, semesterName }) => {
+  const { dispatch } = useHandler();
+
+  function editSemesterName(e) {
+    dispatch({
+      type: TYPES.EDIT_SEMESTER,
+      value: {
+        semesterId,
+        semesterName: e.target.value,
+      },
+    });
+  }
+
+  function deleteSemester() {
+    dispatch({
+      type: TYPES.DELETE_SEMESTER,
+      value: {
+        semesterId,
+      },
+    });
+  }
   return (
     <Box
       bgColor="#6c63ff"
@@ -20,7 +39,7 @@ const Year = ({ item }) => {
     >
       <Input
         type="text"
-        placeholder={'Semester ' + item.id}
+        placeholder={semesterName}
         variant="flushed"
         p="2rem"
         fontSize="1.9rem"
@@ -29,7 +48,7 @@ const Year = ({ item }) => {
         width="30%"
         required
         value={semesterName}
-        onChange={e => setSemesterName(e.target.value)}
+        onChange={editSemesterName}
         _placeholder={{
           opacity: '0.6',
           color: 'white',
@@ -38,7 +57,7 @@ const Year = ({ item }) => {
       />
 
       <Flex columnGap=".7rem" alignItems="center">
-        <Link to="/semester">
+        <Link to={`/semester/${semesterId}`}>
           <Button
             p="2rem"
             fontSize="1.9rem"
@@ -54,7 +73,7 @@ const Year = ({ item }) => {
           color="black"
           aria-label="delete item"
           borderRadius="1rem"
-          onClick={() => handleDelete(item.id)}
+          onClick={deleteSemester}
           _hover={{
             color: 'red.400',
           }}
