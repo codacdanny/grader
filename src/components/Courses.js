@@ -4,11 +4,10 @@ import { RiDeleteBin2Fill } from 'react-icons/ri';
 import { TYPES } from '../context/Reducer';
 import { useHandler } from '../context/StateHandler';
 
-const Courses = ({ courseId, grade, semesterId, courseName }) => {
+const Courses = ({ courseId, grade, semesterId, unit, courseName }) => {
   const { dispatch } = useHandler();
 
   function deleteCourse() {
-    console.log('mysemesterId', semesterId);
     dispatch({
       type: TYPES.DELETE_COURSE,
       value: {
@@ -26,6 +25,7 @@ const Courses = ({ courseId, grade, semesterId, courseName }) => {
         courseId,
         courseName: e.target.value,
         grade,
+        unit,
       },
     });
   }
@@ -38,6 +38,20 @@ const Courses = ({ courseId, grade, semesterId, courseName }) => {
         courseId,
         courseName,
         grade: e.target.value,
+        unit,
+      },
+    });
+  }
+
+  function editCourseUnit(e) {
+    dispatch({
+      type: TYPES.EDIT_COURSE,
+      value: {
+        semesterId,
+        courseId,
+        courseName,
+        grade,
+        unit: e.target.value,
       },
     });
   }
@@ -84,15 +98,15 @@ const Courses = ({ courseId, grade, semesterId, courseName }) => {
         value={grade}
         onChange={editCourseGrade}
       >
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
+        <option value={5}>A</option>
+        <option value={4}>B</option>
+        <option value={3}>C</option>
+        <option value={2}>D</option>
+        <option value={1}>E</option>
+        <option value={0}>F</option>
       </Select>
 
-      {/* <Input
+      <Input
         type="number"
         placeholder="unit points"
         variant="flushed"
@@ -101,14 +115,14 @@ const Courses = ({ courseId, grade, semesterId, courseName }) => {
         borderRadius="1rem"
         textColor="white"
         width="25%"
-        value={unitPoint}
-        onChange={e => setUnitPoint(e.target.value)}
+        value={unit}
+        onChange={editCourseUnit}
         _placeholder={{
           opacity: '0.6',
           color: 'white',
           fontWeight: '300',
         }}
-      /> */}
+      />
       <Button
         fontSize="2.5rem"
         py="2rem"

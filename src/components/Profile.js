@@ -10,6 +10,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
   const { items, dispatch } = useHandler();
+
   const handleLogout = async () => {
     try {
       await logOut();
@@ -19,6 +20,42 @@ const Profile = () => {
       console.log(err.message);
     }
   };
+
+  // const init = [
+  //   {
+  //     semesterId: 1,
+  //     semesterName: 'Semester 1',
+  //     result: [{ courseId: 1, courseName: `Course 1`, grade: 5, unit: 0 }],
+  //   },
+  // ];
+
+  function calculateCGPA() {
+    let totalGPA;
+    let calcCGPA;
+    let totalUnit;
+    console.log(items.length);
+    let cgpaObject = items
+      .map(item =>
+        item.result.reduce(
+          (a, b) => {
+            totalGPA = a.totalGPA + b.grade * b.unit;
+            totalUnit = a.totalUnit + b.unit;
+            return { totalGPA, totalUnit };
+          },
+          { totalUnit: 0, totalGPA: 0 }
+        )
+      )
+      .map(item => {
+        if (item.totalUnit === 0) return null;
+        return item.totalGPA / item.totalUnit;
+      });
+    calcCGPA =
+      cgpaObject.reduce((a, b) => a + b, 0) /
+      cgpaObject.filter(x => x !== null).length;
+
+    return calcCGPA;
+  }
+  let cgpa = calculateCGPA();
   const addSemester = () => {
     dispatch({
       type: TYPES.ADD_SEMESTER,
@@ -49,7 +86,7 @@ const Profile = () => {
         <Text fontSize="1.6rem" mb=".5rem">
           Hello welcome {user && user.email}
         </Text>
-        <Heading as="h3">Current CGPA: 0.00 </Heading>
+        <Heading as="h3">GPA: {cgpa.toFixed(2)} </Heading>
       </Box>
       <Box
         as="section"
@@ -79,7 +116,7 @@ const Profile = () => {
           // setNewItem={setNewItem}
           onClick={addSemester}
         >
-          Add year
+          Add Semester
         </Button>
       </Box>
     </Box>

@@ -8,15 +8,33 @@ import { TYPES } from '../context/Reducer';
 
 const Semester = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
   const { user, logOut } = useAuth();
+  const { id } = useParams();
   let semesterId = parseInt(id);
 
   const { items, dispatch } = useHandler();
-  //console.log(items);
-  let list = items.find(x => x.semesterId === semesterId);
+
+  let list = items.find(item => item.semesterId === semesterId);
+  function calculateGPA() {
+    let totalScore;
+    let totalUnits;
+    if (list.result.length === 0) {
+      totalScore = 0;
+      totalUnits = 0;
+    } else {
+      totalScore = list.result
+        .map(item => parseInt(item.unit) * parseInt(item.grade))
+        .reduce((a, b) => a + b);
+      totalUnits = parseInt(
+        list.result?.reduce((a, b) => a + parseInt(b.unit), 0)
+      );
+    }
+    if (totalUnits === 0) return 0;
+    return totalScore / totalUnits;
+  }
+  let gpa = calculateGPA();
+
   function addCourses() {
-    console.log('add my courses');
     dispatch({
       type: TYPES.ADD_COURSE,
       value: {
@@ -82,11 +100,11 @@ const Semester = () => {
         </Flex>
       </Flex>
 
-      <Box mt="2rem" textAlign="center">
+      <Box my="2rem" textAlign="center">
         <Text fontSize="1.6rem" mb=".5rem">
           Hello welcome {user && user.email}
         </Text>
-        <Heading as="h3">GPA: 0.00 </Heading>
+        <Heading as="h3">GPA: {gpa.toFixed(2)} </Heading>
       </Box>
       <Box
         as="section"
@@ -99,7 +117,7 @@ const Semester = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        {list.result.map(
+        {list?.result.map(
           (
             item // i changed this line
           ) => (
@@ -107,6 +125,7 @@ const Semester = () => {
               key={item.courseId}
               courseId={item.courseId}
               grade={item.grade}
+              unit={item.unit}
               courseName={item.courseName}
               semesterId={semesterId}
             />

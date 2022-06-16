@@ -9,11 +9,11 @@ const StateHandler = ({ children }) => {
     {
       semesterId: 1,
       semesterName: 'Semester 1',
-      result: [{ courseId: 1, courseName: 'math101', grade: 'A' }],
+      result: [{ courseId: 1, courseName: `Course 1`, grade: 5, unit: 0 }],
     },
   ];
-  const newInit = getLocal(); // we have to change this i think!!
-  const initState = newInit === null ? init : newInit; // I thimk we should rewrite this too since we have the getLocal fn
+  const newInit = getLocal();
+  const initState = newInit === null ? init : newInit;
   const [items, dispatch] = React.useReducer(reducer, initState);
 
   return (

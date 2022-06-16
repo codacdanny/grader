@@ -47,7 +47,7 @@ function reducer(state, action) {
       newSemesterName = {
         semesterId: newSemesterId,
         semesterName: 'semester' + newSemesterId,
-        result: [{ courseId: 1, courseName: 'Course', grade: 'A' }],
+        result: [{ courseId: 1, courseName: 'Course', grade: 5, unit: 0 }],
       };
 
       newState = [...state, newSemesterName];
@@ -69,17 +69,17 @@ function reducer(state, action) {
       );
       return saveLocal(semester);
     case TYPES.ADD_COURSE:
-      console.log('chicken');
       newCourseId = getNewCourseId(state, action.value.semesterId);
       newState = [...state];
       semester = state.find(
         item => item.semesterId === action.value.semesterId
       );
-      console.log(semester);
+
       semester.result.push({
         courseId: newCourseId,
-        courseName: 'Course' + newCourseId,
-        grade: 'A',
+        courseName: `Course ${newCourseId}`,
+        grade: 5,
+        unit: 1,
       });
       return saveLocal(newState);
     case TYPES.EDIT_COURSE:
@@ -92,6 +92,7 @@ function reducer(state, action) {
       );
       course.courseName = action.value.courseName;
       course.grade = action.value.grade;
+      course.unit = action.value.unit;
       return saveLocal(newState);
 
     case TYPES.DELETE_COURSE:
