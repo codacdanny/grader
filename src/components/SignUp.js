@@ -231,7 +231,7 @@ const SignUp = () => {
               textColor="black"
               w="100%"
             >
-              Sign in with Goggle
+              Sign in with Google
             </Button>
           </ButtonGroup>
 

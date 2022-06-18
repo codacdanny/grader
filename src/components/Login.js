@@ -209,14 +209,14 @@ const Login = () => {
               textColor="black"
               w="100%"
             >
-              Sign in with Goggle
+              Sign in with Google
             </Button>
           </ButtonGroup>
 
           <Text mb="1rem">
-            Don't have an account?{' '}
+            Don't have an account ?
             <Box as="span" textDecor="underline">
-              <Link to="/signup">Sign Up</Link>
+              <Link to="/signup"> Sign Up</Link>
             </Box>
           </Text>
           <Text>
