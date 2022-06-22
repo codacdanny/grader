@@ -1,39 +1,68 @@
-import React from 'react';
-import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Skeleton,
+  Text,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+} from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useHandler } from '../context/StateHandler';
 import Courses from './Courses';
 import { TYPES } from '../context/Reducer';
+import { useLoader } from '../context/LoaderContext';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import Footer from './Footer';
 
 const Semester = () => {
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
+  const { loader } = useLoader();
   const { id } = useParams();
   let semesterId = parseInt(id);
+  const [error, setError] = useState('');
 
   const { items, dispatch } = useHandler();
 
-  let list = items.find(item => item.semesterId === semesterId);
+  let semester = items.find(item => item.semesterId === semesterId);
+  if (semester === undefined) return navigate('/');
+  const handleSave = async e => {
+    e.preventDefault();
+    setError('');
+    try {
+      await setDoc(doc(db, 'details', user.uid), {
+        items: JSON.stringify(items),
+      });
+    } catch (err) {
+      setError(err.message);
+    }
+  };
   function calculateGPA() {
     let totalScore;
     let totalUnits;
-    if (list.result.length === 0) {
+    if (semester.result.length === 0) {
       totalScore = 0;
       totalUnits = 0;
     } else {
-      totalScore = list.result
+      totalScore = semester.result
         .map(item => parseInt(item.unit) * parseInt(item.grade))
         .reduce((a, b) => a + b);
       totalUnits = parseInt(
-        list.result?.reduce((a, b) => a + parseInt(b.unit), 0)
+        semester.result?.reduce((a, b) => a + parseInt(b.unit), 0)
       );
     }
     if (totalUnits === 0) return 0;
     return totalScore / totalUnits;
   }
-  let gpa = calculateGPA();
 
+  let gpa = calculateGPA();
+  gpa = !gpa ? 0 : gpa;
   function addCourses() {
     dispatch({
       type: TYPES.ADD_COURSE,
@@ -47,8 +76,8 @@ const Semester = () => {
       await logOut();
       localStorage.removeItem('login');
       navigate('/');
-    } catch (err) {
-      console.log(err.message);
+    } catch (error) {
+      setError(error.message);
     }
   };
   return (
@@ -59,14 +88,49 @@ const Semester = () => {
         p="1rem"
         bgColor="#6c63ff"
       >
-        <Heading as="h1">The Grader</Heading>
-        <Flex columnGap="2rem">
+        <Heading as="h1" mr="1rem">
+          The Grader
+        </Heading>
+        <Flex
+          columnGap={{
+            base: '1rem',
+            lg: '2rem',
+          }}
+        >
+          <Button
+            onClick={handleSave}
+            bgColor="blackAlpha.900"
+            fontSize={{
+              base: '1.2rem',
+              lg: '1.5rem',
+            }}
+            px="1.5rem"
+            py="1.9rem"
+            _active={{
+              color: 'black',
+              bgColor: 'white',
+            }}
+            _focus={{
+              color: 'black',
+              bgColor: 'white',
+            }}
+            _hover={{
+              color: 'black',
+              bgColor: 'white',
+            }}
+          >
+            Save
+          </Button>
+
           <Link to="/">
             <Button
               bgColor="blackAlpha.900"
               px="1.5rem"
               py="1.9rem"
-              fontSize="1.5rem"
+              fontSize={{
+                base: '1.2rem',
+                lg: '1.5rem',
+              }}
               _hover={{
                 color: 'black',
                 bgColor: 'white',
@@ -85,7 +149,10 @@ const Semester = () => {
             bgColor="blackAlpha.900"
             px="1.5rem"
             py="1.9rem"
-            fontSize="1.5rem"
+            fontSize={{
+              base: '1.2rem',
+              lg: '1.5rem',
+            }}
             _hover={{
               color: 'black',
               bgColor: 'white',
@@ -101,47 +168,75 @@ const Semester = () => {
       </Flex>
 
       <Box my="2rem" textAlign="center">
+        {error && (
+          <Alert status="error" fontSize="1.4rem" my="1rem">
+            <AlertIcon />
+            <AlertTitle>{error}</AlertTitle>
+          </Alert>
+        )}
         <Text fontSize="1.6rem" mb=".5rem">
           Hello welcome {user && user.email}
         </Text>
         <Heading as="h3">GPA: {gpa.toFixed(2)} </Heading>
       </Box>
-      <Box
-        as="section"
-        mx="auto"
-        display="flex"
-        maxWidth="800px"
-        // p="3rem"
-        height="100%"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-      >
-        {list?.result.map(
-          (
-            item // i changed this line
-          ) => (
-            <Courses
-              key={item.courseId}
-              courseId={item.courseId}
-              grade={item.grade}
-              unit={item.unit}
-              courseName={item.courseName}
-              semesterId={semesterId}
-            />
-          )
-        )}
-
-        <Button
-          p="2rem"
-          fontSize="1.9rem"
-          borderRadius="1rem"
-          textColor="black"
-          onClick={addCourses}
+      {loader ? (
+        Array.from(Array(4).keys()).map(i => (
+          <Skeleton
+            mx="auto"
+            display="flex"
+            maxWidth="600px"
+            // p="3rem"
+            key={i}
+            height="50px"
+            alignItems="center"
+            justifyContent="center"
+            flexDirection="column"
+            my="10px"
+          />
+        ))
+      ) : (
+        <Box
+          as="section"
+          mx="auto"
+          display="flex"
+          // p="3rem"
+          height="100%"
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
         >
-          Add Course
-        </Button>
-      </Box>
+          {semester?.result.map(
+            (
+              item // i changed this line
+            ) => (
+              <Courses
+                key={item.courseId}
+                courseId={item.courseId}
+                grade={item.grade}
+                unit={item.unit}
+                courseName={item.courseName}
+                semesterId={semesterId}
+              />
+            )
+          )}
+
+          <Button
+            p={{
+              base: '1.4rem',
+              lg: '2rem',
+            }}
+            fontSize={{
+              base: '1.2rem',
+              lg: '1.9rem',
+            }}
+            borderRadius="1rem"
+            textColor="black"
+            onClick={addCourses}
+          >
+            Add Course
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };

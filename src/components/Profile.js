@@ -1,39 +1,63 @@
-import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
-import React from 'react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Skeleton,
+  Text,
+  Alert,
+  AlertTitle,
+  AlertIcon,
+  Link,
+} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { TYPES } from '../context/Reducer';
 import { useHandler } from '../context/StateHandler';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { DiGithubBadge } from 'react-icons/di';
 import Year from './Year';
+import { useLoader } from '../context/LoaderContext';
+import { useState } from 'react';
 
 const Profile = () => {
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
   const { items, dispatch } = useHandler();
+  const { loader, setLoader } = useLoader();
+  const [error, setError] = useState('');
 
+  const handleSave = async () => {
+    setError('');
+    try {
+      await setDoc(doc(db, 'details', user.uid), {
+        items: JSON.stringify(items),
+      });
+    } catch (error) {
+      setError(error.message);
+    }
+  };
   const handleLogout = async () => {
+    setError('');
     try {
       await logOut();
       localStorage.removeItem('login');
+      await handleSave();
+      dispatch({
+        type: TYPES.RESET_DATA,
+      });
+      setLoader(true);
       navigate('/');
-    } catch (err) {
-      console.log(err.message);
+    } catch (error) {
+      setError(error.message);
     }
   };
-
-  // const init = [
-  //   {
-  //     semesterId: 1,
-  //     semesterName: 'Semester 1',
-  //     result: [{ courseId: 1, courseName: `Course 1`, grade: 5, unit: 0 }],
-  //   },
-  // ];
-
   function calculateCGPA() {
     let totalGPA;
     let calcCGPA;
     let totalUnit;
-    console.log(items.length);
+
     let cgpaObject = items
       .map(item =>
         item.result.reduce(
@@ -56,6 +80,7 @@ const Profile = () => {
     return calcCGPA;
   }
   let cgpa = calculateCGPA();
+  cgpa = !cgpa ? 0 : cgpa;
   const addSemester = () => {
     dispatch({
       type: TYPES.ADD_SEMESTER,
@@ -70,55 +95,138 @@ const Profile = () => {
         p="1rem"
         bgColor="#6c63ff"
       >
-        <Heading as="h1">The Grader</Heading>
-        <Button
-          onClick={handleLogout}
-          bgColor="blackAlpha.900"
-          px="1.5rem"
-          py="1.9rem"
-          fontSize="1.5rem"
+        <Link
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          isExternal
+          href="https://github.com/codacdanny/grader"
+          fontSize="2.5rem"
+          mr="1rem"
         >
-          Log Out
-        </Button>
+          <Heading as="h1" mr=".2rem">
+            The Grader
+          </Heading>
+          <DiGithubBadge />
+        </Link>
+        <Box>
+          <Button
+            onClick={handleSave}
+            bgColor="blackAlpha.900"
+            px="1.5rem"
+            py="1.9rem"
+            mr={{
+              base: '1rem',
+              lg: '2rem',
+            }}
+            fontSize={{
+              base: '1.2rem',
+              lg: '1.5rem',
+            }}
+            _active={{
+              color: 'black',
+              bgColor: 'white',
+            }}
+            _focus={{
+              color: 'black',
+              bgColor: 'white',
+            }}
+            _hover={{
+              color: 'black',
+              bgColor: 'white',
+            }}
+          >
+            Save
+          </Button>
+          <Button
+            onClick={handleLogout}
+            bgColor="blackAlpha.900"
+            px="1.5rem"
+            py="1.9rem"
+            fontSize={{
+              base: '1.2rem',
+              lg: '1.5rem',
+            }}
+            _active={{
+              color: 'black',
+              bgColor: 'white',
+            }}
+            _focus={{
+              color: 'black',
+              bgColor: 'white',
+            }}
+            _hover={{
+              color: 'black',
+              bgColor: 'white',
+            }}
+          >
+            Log Out
+          </Button>
+        </Box>
       </Flex>
-
       <Box my="2rem" textAlign="center">
         <Text fontSize="1.6rem" mb=".5rem">
           Hello welcome {user && user.email}
         </Text>
-        <Heading as="h3">GPA: {cgpa.toFixed(2)} </Heading>
+        <Box>
+          {error && (
+            <Alert status="error" fontSize="1.4rem" my="1rem" color="black">
+              <AlertIcon />
+              <AlertTitle>{error}</AlertTitle>
+            </Alert>
+          )}
+        </Box>
+        <Heading as="h3">CGPA: {cgpa.toFixed(2)} </Heading>
       </Box>
-      <Box
-        as="section"
-        mx="auto"
-        display="flex"
-        maxWidth="800px"
-        // p="3rem"
-        height="100%"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-      >
-        {items.map(item => (
-          <Year
-            key={item.semesterId}
-            semesterName={item.semesterName}
-            semesterId={item.semesterId}
+      {loader ? (
+        Array.from(Array(4).keys()).map(i => (
+          <Skeleton
+            mx="auto"
+            display="flex"
+            maxWidth="600px"
+            key={i}
+            height="50px"
+            alignItems="center"
+            justifyContent="center"
+            flexDirection="column"
+            my="10px"
           />
-        ))}
-
-        <Button
-          p="2rem"
-          fontSize="1.9rem"
-          borderRadius="1rem"
-          textColor="black"
-          // newItem={newItem}
-          // setNewItem={setNewItem}
-          onClick={addSemester}
+        ))
+      ) : (
+        <Box
+          as="section"
+          mx="auto"
+          display="flex"
+          height="100%"
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
         >
-          Add Semester
-        </Button>
-      </Box>
+          {items.map(item => (
+            <Year
+              key={item.semesterId}
+              semesterName={item.semesterName}
+              semesterId={item.semesterId}
+            />
+          ))}
+
+          <Button
+            p={{
+              base: '1.4rem',
+              lg: '2rem',
+            }}
+            fontSize={{
+              base: '1.2rem',
+              lg: '1.9rem',
+            }}
+            borderRadius="1rem"
+            textColor="black"
+            onClick={addSemester}
+          >
+            Add Semester
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };

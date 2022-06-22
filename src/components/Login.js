@@ -16,15 +16,11 @@ import { DiGithubBadge } from 'react-icons/di';
 import { Link, useNavigate } from 'react-router-dom';
 
 import React, { useState } from 'react';
-// import { useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
-  // const emailref = useRef();
-  // const passwordref = useRef();
-
   const [loading, setloading] = useState(false);
-  //   const [passwordConfirm, setPasswordConfirm] = useState('');
+
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,6 +41,7 @@ const Login = () => {
 
   const handleGitHubSignin = async e => {
     e.preventDefault();
+
     try {
       await gitHubSignIn();
       navigate('/');
@@ -78,24 +75,32 @@ const Login = () => {
         mx="auto"
         display="flex"
         className="card"
+        my="1.5rem"
         p="3rem"
-        height="90%"
-        w="40%"
+        height="100%"
+        w={{
+          base: '90%',
+          lg: '60%',
+          mini: '45%',
+        }}
         flexDir="column"
         alignItems="center"
         justifyContent="center"
       >
         <Heading
           as="h1"
-          fontSize="3rem"
+          fontSize={{
+            base: '2rem',
+            lg: '3rem',
+          }}
           textColor="white"
           textTransform="uppercase"
-          mt="-4rem"
+          mt="0.7rem"
         >
           Log in
         </Heading>
         {error && (
-          <Alert status="error" fontSize="1.4rem" my="1rem">
+          <Alert status="error" fontSize="1.4rem" my="1rem" color="black">
             <AlertIcon />
             <AlertTitle>{error}</AlertTitle>
           </Alert>
@@ -103,10 +108,13 @@ const Login = () => {
         <FormControl my="2rem" w="100%" onSubmit={handleSubmit}>
           <FormLabel
             htmlFor="email"
-            fontSize="1.7rem"
             my=".7rem"
             ml="2rem"
             color="white"
+            fontSize={{
+              base: '1.5rem',
+              lg: '1.7rem',
+            }}
           >
             Email:
           </FormLabel>
@@ -116,9 +124,11 @@ const Login = () => {
             isRequired={true}
             id="email"
             type="email"
-            // ref={emailref}
-            placeholder="name@mail.com"
-            padding="2rem"
+            placeholder="name@email.com"
+            padding={{
+              base: '1.5rem',
+              lg: '2rem',
+            }}
             fontSize="1.6rem"
             borderRadius="10rem"
             w="100%"
@@ -127,7 +137,10 @@ const Login = () => {
 
           <FormLabel
             htmlFor="password"
-            fontSize="1.7rem"
+            fontSize={{
+              base: '1.5rem',
+              lg: '1.7rem',
+            }}
             my=".7rem"
             ml="2rem"
             color="white"
@@ -141,7 +154,10 @@ const Login = () => {
             type="password"
             // ref={passwordref}
             placeholder="*******"
-            padding="2rem"
+            padding={{
+              base: '1.5rem',
+              lg: '2rem',
+            }}
             w="100%"
             fontSize="1.6rem"
             borderRadius="10rem"

@@ -4,15 +4,15 @@ import { getLocal } from './Reducer';
 
 const stateContext = createContext();
 
+export const init = [
+  {
+    semesterId: 1,
+    semesterName: 'Semester 1',
+    result: [{ courseId: 1, courseName: `Course 1`, grade: 5, unit: 0 }],
+  },
+];
 const StateHandler = ({ children }) => {
-  const init = [
-    {
-      semesterId: 1,
-      semesterName: 'Semester 1',
-      result: [{ courseId: 1, courseName: `Course 1`, grade: 5, unit: 0 }],
-    },
-  ];
-  const newInit = getLocal();
+  const newInit = getLocal(); // should i put getDetails function here?
   const initState = newInit === null ? init : newInit;
   const [items, dispatch] = React.useReducer(reducer, initState);
 

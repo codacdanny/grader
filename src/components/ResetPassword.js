@@ -10,6 +10,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  useToast,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
@@ -27,15 +28,22 @@ const ResetPassword = () => {
   const [display, setDisplay] = useState('');
 
   const { passwordReset } = useAuth();
-
+  let toast = useToast();
   async function handleReset(e) {
     e.preventDefault();
     setloading(true);
     try {
       await passwordReset(email);
       setDisplay('check your email');
-    } catch (err) {
-      setError(err.message);
+    } catch (error) {
+      setError(error.message);
+
+      toast({
+        status: 'error',
+        description: error.message,
+        duration: 9000,
+        isClosable: true,
+      });
     }
     setloading(false);
   }

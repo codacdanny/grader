@@ -32,8 +32,15 @@ const Year = ({ semesterId, semesterName }) => {
       display="flex"
       alignItems="center"
       justifyContent="space-between"
-      w="70%"
-      p="1.5rem"
+      w={{
+        base: '97%',
+        sm: '85%',
+        lg: '70%',
+      }}
+      p={{
+        base: '1rem',
+        lg: '1.5rem',
+      }}
       mb="3rem"
       borderRadius="1rem"
     >
@@ -41,8 +48,14 @@ const Year = ({ semesterId, semesterName }) => {
         type="text"
         placeholder={semesterName}
         variant="flushed"
-        p="2rem"
-        fontSize="1.9rem"
+        p={{
+          base: '1.2rem',
+          lg: '2rem',
+        }}
+        fontSize={{
+          base: '1.2rem',
+          lg: '1.9rem',
+        }}
         borderRadius="1rem"
         textColor="white"
         width="30%"
@@ -59,8 +72,14 @@ const Year = ({ semesterId, semesterName }) => {
       <Flex columnGap=".7rem" alignItems="center">
         <Link to={`/semester/${semesterId}`}>
           <Button
-            p="2rem"
-            fontSize="1.9rem"
+            p={{
+              base: '1.2rem',
+              lg: '2rem',
+            }}
+            fontSize={{
+              base: '1.2rem',
+              lg: '1.9rem',
+            }}
             borderRadius="1rem"
             textColor="black"
           >
@@ -68,7 +87,10 @@ const Year = ({ semesterId, semesterName }) => {
           </Button>
         </Link>
         <Button
-          fontSize="2.5rem"
+          fontSize={{
+            base: '1.9rem',
+            lg: '2.5rem',
+          }}
           py="2rem"
           color="black"
           aria-label="delete item"

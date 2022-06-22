@@ -2,6 +2,7 @@ import { Box, Flex, Heading, Image, LinkBox, Spacer } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import svg from '../undraw_calculator_re_alsc.svg';
+import Footer from './Footer';
 
 const HomePage = () => {
   return (
@@ -13,7 +14,7 @@ const HomePage = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        h="90vh"
+        h="91vh"
         p="3rem"
         className="card"
       >
@@ -24,7 +25,16 @@ const HomePage = () => {
               Save your grades <Spacer />
               Access them anywhere
             </Heading>
-            <LinkBox mt="21rem" fontSize="2.5rem" textAlign="center">
+            <LinkBox
+              mt={{
+                base: '7rem',
+                big: '10rem',
+
+                mini: '21rem',
+              }}
+              fontSize="2.5rem"
+              textAlign="center"
+            >
               <Link to="/signup">
                 <Box
                   fontWeight="semibold"
@@ -60,11 +70,17 @@ const HomePage = () => {
               </Link>
             </LinkBox>
           </Box>
-          <Box>
+          <Box
+            display={{
+              base: 'none',
+              lg: 'flex',
+            }}
+          >
             <Image src={svg} alt="calculator app" />
           </Box>
         </Flex>
       </Box>
+      <Footer />
     </Box>
   );
 };

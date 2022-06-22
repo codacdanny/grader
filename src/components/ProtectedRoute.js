@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children }) => {
     children
   ) : (
     <HomePage />
-  );
+  ); // here we are checking if user is logged in
 };
 
 export default ProtectedRoute;

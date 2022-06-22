@@ -1,6 +1,5 @@
 import { extendTheme } from '@chakra-ui/react';
 
-// Version 1: Using objects
 const theme = extendTheme({
   styles: {
     global: {
@@ -9,8 +8,18 @@ const theme = extendTheme({
         bg: '#080808',
         color: 'white',
       },
-      // styles for the `a`
     },
+  },
+  breakpoints: {
+    small: '250px',
+    md: '320px',
+    big: '375px',
+    bigger: '425px',
+    sm: '480px',
+    lg: '768px',
+    mini: '1000px',
+    xl: '1440px',
+    '2xl': '2560px',
   },
 });
 export default theme;

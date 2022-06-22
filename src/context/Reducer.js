@@ -1,3 +1,5 @@
+import { init } from './StateHandler';
+
 export const TYPES = {
   ADD_SEMESTER: 'addsemester',
   EDIT_SEMESTER: 'editsemester',
@@ -5,6 +7,8 @@ export const TYPES = {
   ADD_COURSE: 'addcourse',
   EDIT_COURSE: 'editcourse',
   DELETE_COURSE: 'deletecourse',
+  GET_DATA_FROM_FIREBASE: 'getFirebaseData',
+  RESET_DATA: 'reset',
 };
 
 function getNewSemesterId(data) {
@@ -41,6 +45,13 @@ function reducer(state, action) {
   //let newCourse;
 
   switch (action.type) {
+    case TYPES.RESET_DATA:
+      return saveLocal(init);
+    case TYPES.GET_DATA_FROM_FIREBASE:
+      let newData = saveLocal(JSON.parse(action.value.data));
+
+      return newData;
+
     case TYPES.ADD_SEMESTER:
       newSemesterId = getNewSemesterId(state);
       newState = [...state];
@@ -106,6 +117,7 @@ function reducer(state, action) {
       );
 
       return saveLocal(newState);
+
     default:
       return state;
   }
@@ -113,8 +125,9 @@ function reducer(state, action) {
 export function getLocal() {
   return JSON.parse(localStorage.getItem('result'));
 }
-function saveLocal(data) {
+export function saveLocal(data) {
   localStorage.setItem('result', JSON.stringify(data));
   return getLocal();
 }
+
 export default reducer;

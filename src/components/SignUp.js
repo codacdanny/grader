@@ -31,22 +31,28 @@ const SignUp = () => {
 
   const handleGoogleSignin = async e => {
     e.preventDefault();
+    setError('');
+    setloading(true);
     try {
       await googleSignIn();
       navigate('/');
-    } catch (err) {
-      setError(err.message);
+    } catch (error) {
+      setError(error.message);
     }
+    setloading(false);
   };
 
   const handleGitHubSignin = async e => {
     e.preventDefault();
+    setError('');
+    setloading(true);
     try {
       await gitHubSignIn();
       navigate('/');
-    } catch (err) {
-      setError(err.message);
+    } catch (error) {
+      setError(error.message);
     }
+    setloading(false);
   };
   async function handleSubmit(e) {
     e.preventDefault();
@@ -57,8 +63,8 @@ const SignUp = () => {
       try {
         await signup(email, password);
         navigate('/');
-      } catch (err) {
-        setError(err.message);
+      } catch (error) {
+        setError(error.message);
       }
     } else {
       setError('passwords do not match');
@@ -78,23 +84,36 @@ const SignUp = () => {
         display="flex"
         className="card"
         p="3rem"
-        height="95%"
-        w="40%"
+        height="100%"
+        w={{
+          base: '90%',
+          lg: '60%',
+          mini: '45%',
+        }}
         flexDir="column"
         alignItems="center"
         justifyContent="center"
       >
         <Heading
           as="h1"
-          fontSize="3rem"
+          fontSize={{
+            base: '2rem',
+            lg: '3rem',
+          }}
           textColor="white"
           textTransform="uppercase"
-          mt="-4rem"
+          mt=".7rem"
         >
           Sign Up
         </Heading>
         {error && (
-          <Alert status="error" fontSize="1.4rem" my="1rem">
+          <Alert
+            status="error"
+            fontSize="1.4rem"
+            my="1rem"
+            color="black"
+            py="1rem"
+          >
             <AlertIcon />
             <AlertTitle>{error}</AlertTitle>
           </Alert>
@@ -102,7 +121,10 @@ const SignUp = () => {
         <FormControl my="2rem" w="100%" onSubmit={handleSubmit}>
           <FormLabel
             htmlFor="email"
-            fontSize="1.7rem"
+            fontSize={{
+              base: '1.5rem',
+              lg: '1.7rem',
+            }}
             my=".7rem"
             ml="2rem"
             color="white"
@@ -116,8 +138,11 @@ const SignUp = () => {
             id="email"
             type="email"
             // ref={emailref}
-            placeholder="name@mail.com"
-            padding="2rem"
+            placeholder="name@email.com"
+            padding={{
+              base: '1.5rem',
+              lg: '2rem',
+            }}
             fontSize="1.6rem"
             borderRadius="10rem"
             w="100%"
@@ -126,7 +151,10 @@ const SignUp = () => {
 
           <FormLabel
             htmlFor="password"
-            fontSize="1.7rem"
+            fontSize={{
+              base: '1.5rem',
+              lg: '1.7rem',
+            }}
             my=".7rem"
             ml="2rem"
             color="white"
@@ -140,7 +168,10 @@ const SignUp = () => {
             type="password"
             // ref={passwordref}
             placeholder="*******"
-            padding="2rem"
+            padding={{
+              base: '1.5rem',
+              lg: '2rem',
+            }}
             w="100%"
             fontSize="1.6rem"
             borderRadius="10rem"
@@ -149,7 +180,10 @@ const SignUp = () => {
 
           <FormLabel
             htmlFor="password-confirm"
-            fontSize="1.7rem"
+            fontSize={{
+              base: '1.5rem',
+              lg: '1.7rem',
+            }}
             my=".7rem"
             ml="2rem"
             color="white"
@@ -163,7 +197,10 @@ const SignUp = () => {
             type="password"
             // ref={password_confirm_ref}
             placeholder="*******"
-            padding="2rem"
+            padding={{
+              base: '1.5rem',
+              lg: '2rem',
+            }}
             fontSize="1.6rem"
             borderRadius="10rem"
             w="100%"

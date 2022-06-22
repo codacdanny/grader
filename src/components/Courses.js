@@ -62,8 +62,15 @@ const Courses = ({ courseId, grade, semesterId, unit, courseName }) => {
       display="flex"
       alignItems="center"
       justifyContent="space-evenly"
-      w="70%"
-      p="1.5rem"
+      w={{
+        base: '97%',
+        sm: '85%',
+        lg: '70%',
+      }}
+      p={{
+        base: '1rem',
+        lg: '1.5rem',
+      }}
       mb="3rem"
       borderRadius="1rem"
     >
@@ -71,8 +78,14 @@ const Courses = ({ courseId, grade, semesterId, unit, courseName }) => {
         type="text"
         placeholder="Course"
         variant="flushed"
-        p="2rem"
-        fontSize="1.9rem"
+        p={{
+          base: '1.2rem',
+          lg: '2rem',
+        }}
+        fontSize={{
+          base: '1.2rem',
+          lg: '1.9rem',
+        }}
         borderRadius="1rem"
         textColor="white"
         width="35%"
@@ -91,9 +104,18 @@ const Courses = ({ courseId, grade, semesterId, unit, courseName }) => {
         fontWeight="medium"
         textAlign="center"
         width="20%"
-        mt="1.7rem"
-        p="1rem"
-        fontSize="1.9rem"
+        mt={{
+          base: '0',
+          lg: '1.7rem',
+        }}
+        p={{
+          base: '.8rem',
+          lg: '1rem',
+        }}
+        fontSize={{
+          base: '1.2rem',
+          lg: '1.9rem',
+        }}
         variant="flushed"
         value={grade}
         onChange={editCourseGrade}
@@ -110,8 +132,14 @@ const Courses = ({ courseId, grade, semesterId, unit, courseName }) => {
         type="number"
         placeholder="unit points"
         variant="flushed"
-        p="2rem"
-        fontSize="1.9rem"
+        p={{
+          base: '1.2rem',
+          lg: '2rem',
+        }}
+        fontSize={{
+          base: '1.2rem',
+          lg: '1.9rem',
+        }}
         borderRadius="1rem"
         textColor="white"
         width="25%"
@@ -124,7 +152,10 @@ const Courses = ({ courseId, grade, semesterId, unit, courseName }) => {
         }}
       />
       <Button
-        fontSize="2.5rem"
+        fontSize={{
+          base: '1.9rem',
+          lg: '2.5rem',
+        }}
         py="2rem"
         color="black"
         borderRadius="1rem"
