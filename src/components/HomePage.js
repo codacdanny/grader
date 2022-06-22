@@ -29,7 +29,7 @@ const HomePage = () => {
               mt={{
                 base: '7rem',
                 big: '10rem',
-
+                lg: '10rem',
                 mini: '21rem',
               }}
               fontSize="2.5rem"

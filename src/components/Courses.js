@@ -1,4 +1,4 @@
-import { Box, Link, Input, Select } from '@chakra-ui/react';
+import { Box, Button, Input, Select } from '@chakra-ui/react';
 import React from 'react';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 import { TYPES } from '../context/Reducer';
@@ -151,7 +151,7 @@ const Courses = ({ courseId, grade, semesterId, unit, courseName }) => {
           fontWeight: '300',
         }}
       />
-      <Link
+      <Button
         fontSize={{
           base: '1.9rem',
           lg: '2.5rem',
@@ -169,7 +169,7 @@ const Courses = ({ courseId, grade, semesterId, unit, courseName }) => {
         }}
       >
         <RiDeleteBin2Fill />
-      </Link>
+      </Button>
     </Box>
   );
 };

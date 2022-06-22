@@ -5,6 +5,7 @@ import {
   FormLabel,
   Heading,
   Box,
+  Button,
   Text,
   Alert,
   AlertIcon,
@@ -112,7 +113,7 @@ const ResetPassword = () => {
           />
 
           <Box mt="3rem" fontSize="1.6rem" textAlign="center" minWidth="100%">
-            <Link
+            <Button
               isDisabled={loading}
               onClick={handleReset}
               type="submit"
@@ -128,7 +129,7 @@ const ResetPassword = () => {
               w="50%"
             >
               Reset
-            </Link>
+            </Button>
           </Box>
         </FormControl>
 

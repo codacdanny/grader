@@ -1,6 +1,6 @@
 import {
   Box,
-  Link,
+  Button,
   Flex,
   Heading,
   Skeleton,
@@ -8,6 +8,7 @@ import {
   Alert,
   AlertTitle,
   AlertIcon,
+  Link,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -109,7 +110,7 @@ const Profile = () => {
           <DiGithubBadge />
         </Link>
         <Box>
-          <Link
+          <Button
             onClick={handleSave}
             bgColor="blackAlpha.900"
             px="1.5rem"
@@ -136,8 +137,8 @@ const Profile = () => {
             }}
           >
             Save
-          </Link>
-          <Link
+          </Button>
+          <Button
             onClick={handleLogout}
             bgColor="blackAlpha.900"
             px="1.5rem"
@@ -160,7 +161,7 @@ const Profile = () => {
             }}
           >
             Log Out
-          </Link>
+          </Button>
         </Box>
       </Flex>
       <Box my="2rem" textAlign="center">
@@ -209,7 +210,7 @@ const Profile = () => {
             />
           ))}
 
-          <Link
+          <Button
             p={{
               base: '1.4rem',
               lg: '2rem',
@@ -223,7 +224,7 @@ const Profile = () => {
             onClick={addSemester}
           >
             Add Semester
-          </Link>
+          </Button>
         </Box>
       )}
     </Box>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Box,
+  Button,
   Flex,
   Heading,
   Skeleton,
@@ -95,7 +96,7 @@ const Semester = () => {
             lg: '2rem',
           }}
         >
-          <Link
+          <Button
             onClick={handleSave}
             bgColor="blackAlpha.900"
             fontSize={{
@@ -118,10 +119,10 @@ const Semester = () => {
             }}
           >
             Save
-          </Link>
+          </Button>
 
           <Link to="/">
-            <Link
+            <Button
               bgColor="blackAlpha.900"
               px="1.5rem"
               py="1.9rem"
@@ -139,10 +140,10 @@ const Semester = () => {
               }}
             >
               Home
-            </Link>
+            </Button>
           </Link>
 
-          <Link
+          <Button
             onClick={handleLogout}
             bgColor="blackAlpha.900"
             px="1.5rem"
@@ -161,7 +162,7 @@ const Semester = () => {
             }}
           >
             Log Out
-          </Link>
+          </Button>
         </Flex>
       </Flex>
 
@@ -218,7 +219,7 @@ const Semester = () => {
             )
           )}
 
-          <Link
+          <Button
             p={{
               base: '1.4rem',
               lg: '2rem',
@@ -232,7 +233,7 @@ const Semester = () => {
             onClick={addCourses}
           >
             Add Course
-          </Link>
+          </Button>
         </Box>
       )}
     </Box>
