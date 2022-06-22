@@ -28,9 +28,11 @@ const Profile = () => {
   const { items, dispatch } = useHandler();
   const { loader, setLoader } = useLoader();
   const [error, setError] = useState('');
+  const [save, setSave] = useState(false);
 
   let toast = useToast();
   const handleSave = async () => {
+    setSave(true);
     try {
       await setDoc(doc(db, 'details', user.uid), {
         items: JSON.stringify(items),
@@ -50,6 +52,7 @@ const Profile = () => {
     } catch (error) {
       setError(error);
     }
+    setSave(false);
   };
   const handleLogout = async () => {
     setError('');
@@ -124,6 +127,7 @@ const Profile = () => {
         </Link>
         <Box>
           <Button
+            isLoading={save}
             onClick={handleSave}
             bgColor="blackAlpha.900"
             px="1.5rem"

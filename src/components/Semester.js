@@ -27,12 +27,14 @@ const Semester = () => {
   const { id } = useParams();
   let semesterId = parseInt(id);
   const [error, setError] = useState('');
+  const [save, setSave] = useState(false);
 
   const { items, dispatch } = useHandler();
   let toast = useToast();
   let semester = items.find(item => item.semesterId === semesterId);
   if (semester === undefined) return navigate('/');
-  const handleSave = async e => {
+  const handleSave = async () => {
+    setSave(true);
     try {
       await setDoc(doc(db, 'details', user.uid), {
         items: JSON.stringify(items),
@@ -52,6 +54,7 @@ const Semester = () => {
     } catch (err) {
       setError(err.message);
     }
+    setSave(false);
   };
   function calculateGPA() {
     let totalScore;
@@ -108,6 +111,7 @@ const Semester = () => {
           }}
         >
           <Button
+            isLoading={save}
             onClick={handleSave}
             bgColor="blackAlpha.900"
             fontSize={{
