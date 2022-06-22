@@ -10,7 +10,6 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-  useToast,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
@@ -18,17 +17,13 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const ResetPassword = () => {
-  // const emailref = useRef();
-  // const passwordref = useRef();
-
   const [loading, setloading] = useState(false);
-  //   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [display, setDisplay] = useState('');
 
   const { passwordReset } = useAuth();
-  let toast = useToast();
+
   async function handleReset(e) {
     e.preventDefault();
     setloading(true);
@@ -37,13 +32,6 @@ const ResetPassword = () => {
       setDisplay('check your email');
     } catch (error) {
       setError(error.message);
-
-      toast({
-        status: 'error',
-        description: error.message,
-        duration: 9000,
-        isClosable: true,
-      });
     }
     setloading(false);
   }
@@ -60,15 +48,22 @@ const ResetPassword = () => {
         display="flex"
         className="card"
         p="3rem"
-        height="90%"
-        w="40%"
+        height="100%"
+        w={{
+          base: '90%',
+          lg: '60%',
+          mini: '45%',
+        }}
         flexDir="column"
         alignItems="center"
         justifyContent="center"
       >
         <Heading
           as="h1"
-          fontSize="3rem"
+          fontSize={{
+            base: '2rem',
+            lg: '3rem',
+          }}
           textColor="white"
           textTransform="uppercase"
           mt="-4rem"
@@ -76,13 +71,25 @@ const ResetPassword = () => {
           Reset Password
         </Heading>
         {error && (
-          <Alert status="error" fontSize="1.4rem" my="1rem">
+          <Alert
+            status="error"
+            fontSize="1.4rem"
+            my="1rem"
+            color="black"
+            py="1rem"
+          >
             <AlertIcon />
             <AlertTitle>{error}</AlertTitle>
           </Alert>
         )}
         {display && (
-          <Alert status="success" fontSize="1.4rem" my="1rem">
+          <Alert
+            status="success"
+            fontSize="1.4rem"
+            my="1rem"
+            color="black"
+            py="1rem"
+          >
             <AlertIcon />
             <AlertTitle>{display}</AlertTitle>
           </Alert>
@@ -90,7 +97,10 @@ const ResetPassword = () => {
         <FormControl my="2rem" w="100%">
           <FormLabel
             htmlFor="email"
-            fontSize="1.7rem"
+            fontSize={{
+              base: '1.5rem',
+              lg: '1.7rem',
+            }}
             my=".7rem"
             ml="2rem"
             color="white"
@@ -105,7 +115,10 @@ const ResetPassword = () => {
             type="email"
             // ref={emailref}
             placeholder="name@mail.com"
-            padding="2rem"
+            padding={{
+              base: '1.5rem',
+              lg: '2rem',
+            }}
             fontSize="1.6rem"
             borderRadius="10rem"
             w="100%"

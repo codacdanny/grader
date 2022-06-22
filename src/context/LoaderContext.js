@@ -27,10 +27,11 @@ const LoaderContextProvider = ({ children }) => {
         }
         if (user) {
           const unsub = onSnapshot(doc(db, 'details', user.uid), docSnap => {
-            dispatch({
-              type: TYPES.GET_DATA_FROM_FIREBASE,
-              value: { data: docSnap.data().items },
-            });
+            if (docSnap.data())
+              dispatch({
+                type: TYPES.GET_DATA_FROM_FIREBASE,
+                value: { data: docSnap.data().items },
+              });
           });
 
           return () => unsub();

@@ -183,7 +183,7 @@ const Profile = () => {
       </Flex>
       <Box my="2rem" textAlign="center">
         <Text fontSize="1.6rem" mb=".5rem">
-          Hello welcome {user && user.email}
+          Hello welcome {(user && user.email) || user.displayName}
         </Text>
         <Box>
           {error && (
