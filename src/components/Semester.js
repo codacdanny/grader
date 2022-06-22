@@ -9,6 +9,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  useToast,
 } from '@chakra-ui/react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -28,15 +29,25 @@ const Semester = () => {
   const [error, setError] = useState('');
 
   const { items, dispatch } = useHandler();
-
+  let toast = useToast();
   let semester = items.find(item => item.semesterId === semesterId);
   if (semester === undefined) return navigate('/');
   const handleSave = async e => {
-    e.preventDefault();
-    setError('');
     try {
       await setDoc(doc(db, 'details', user.uid), {
         items: JSON.stringify(items),
+      });
+
+      toast({
+        title: 'Result Saved',
+        description: "We've saved your result for you",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+        containerStyle: {
+          color: 'black',
+          fontSize: '1.5rem',
+        },
       });
     } catch (err) {
       setError(err.message);
