@@ -9,6 +9,7 @@ import {
   AlertTitle,
   AlertIcon,
   Link,
+  useToast,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -27,15 +28,38 @@ const Profile = () => {
   const { items, dispatch } = useHandler();
   const { loader, setLoader } = useLoader();
   const [error, setError] = useState('');
-
+  let toast = useToast();
   const handleSave = async () => {
     setError('');
     try {
       await setDoc(doc(db, 'details', user.uid), {
         items: JSON.stringify(items),
       });
+
+      // toast({
+      //   position: 'top',
+      //   duration: 900,
+      //   isClosable: true,
+      //   render: () => (
+      //     <Box color="black" p={3} bg="">
+      //       We've saved your result for you
+      //     </Box>
+      //   ),
+      // });
+      toast({
+        title: 'Result Saved',
+        description: "We've saved your result for you",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+        containerStyle: {
+          color: 'black',
+          fontSize: '1.5rem',
+        },
+      });
     } catch (error) {
-      setError(error.message);
+      setError(error);
+      console.log('error blak');
     }
   };
   const handleLogout = async () => {

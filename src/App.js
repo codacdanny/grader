@@ -14,7 +14,7 @@ import LoaderContextProvider from './context/LoaderContext';
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme} resetCSS>
       <UserAuthProvider>
         <StateHandler>
           <LoaderContextProvider>
