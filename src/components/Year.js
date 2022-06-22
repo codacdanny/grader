@@ -72,6 +72,7 @@ const Year = ({ semesterId, semesterName }) => {
       <Flex columnGap=".7rem" alignItems="center">
         <Link to={`/semester/${semesterId}`}>
           <Button
+            alignItems="center"
             p={{
               base: '1.2rem',
               lg: '2rem',
