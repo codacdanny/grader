@@ -5,12 +5,11 @@ import {
   FormLabel,
   Heading,
   Box,
-  Button,
   Text,
   Alert,
   AlertIcon,
   AlertTitle,
-  ButtonGroup,
+  LinkBox,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -208,7 +207,7 @@ const SignUp = () => {
           />
 
           <Box mt="3rem" fontSize="1.6rem" textAlign="center" minWidth="100%">
-            <Button
+            <Link
               isDisabled={loading}
               onClick={handleSubmit}
               type="submit"
@@ -223,19 +222,19 @@ const SignUp = () => {
               w="50%"
             >
               SignUp
-            </Button>
+            </Link>
           </Box>
         </FormControl>
 
         <Box mt="2rem" color="white" fontSize="1.6rem" textAlign="center">
-          <ButtonGroup
+          <LinkBox
             my="1rem"
             display="flex"
             flexDir="column"
             justifyContent="center"
             alignItems="center"
           >
-            <Button
+            <Link
               isDisabled={loading}
               onClick={handleGitHubSignin}
               fontSize="1.6rem"
@@ -250,9 +249,9 @@ const SignUp = () => {
               w="100%"
             >
               <DiGithubBadge /> Sign in with Github
-            </Button>
+            </Link>
 
-            <Button
+            <Link
               isDisabled={loading}
               onClick={handleGoogleSignin}
               fontSize="1.6rem"
@@ -269,8 +268,8 @@ const SignUp = () => {
               w="100%"
             >
               Sign in with Google
-            </Button>
-          </ButtonGroup>
+            </Link>
+          </LinkBox>
 
           <Text>
             Already have an account?{' '}
