@@ -18,7 +18,6 @@ import { TYPES } from '../context/Reducer';
 import { useLoader } from '../context/LoaderContext';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import Footer from './Footer';
 
 const Semester = () => {
   const navigate = useNavigate();
