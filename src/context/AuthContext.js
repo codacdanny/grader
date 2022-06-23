@@ -43,7 +43,6 @@ export function UserAuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       if (currentUser) localStorage.setItem('login', 'true');
       setUser(currentUser);
-      console.log(user);
     });
     return () => unsubscribe(); //doing this to clean up the use effect to avoid memory leakage
   });
