@@ -13,6 +13,7 @@ import StateHandler from './context/StateHandler';
 import LoaderContextProvider from './context/LoaderContext';
 
 function App() {
+ 
   return (
     <ChakraProvider theme={theme}>
       <UserAuthProvider>
