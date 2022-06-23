@@ -103,23 +103,23 @@ const Profile = () => {
     });
   };
 
-  if (!user) {
-    (async () => {
-      setError('');
-      try {
-        await logOut();
-        localStorage.removeItem('login');
+  // if (!user) {
+  //   (async () => {
+  //     setError('');
+  //     try {
+  //       await logOut();
+  //       localStorage.removeItem('login');
 
-        dispatch({
-          type: TYPES.RESET_DATA,
-        });
-        setLoader(true);
-        navigate('/');
-      } catch (error) {
-        setError(error.message);
-      }
-    })();
-  }
+  //       dispatch({
+  //         type: TYPES.RESET_DATA,
+  //       });
+  //       setLoader(true);
+  //       navigate('/');
+  //     } catch (error) {
+  //       setError(error.message);
+  //     }
+  //   })();
+  // }
 
   return (
     <Box as="main" mx="auto" textColor="white">
