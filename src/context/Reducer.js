@@ -41,8 +41,6 @@ function reducer(state, action) {
   let course;
   // let newResult;
   let newCourseId;
-  //let newCourseName;
-  //let newCourse;
 
   switch (action.type) {
     case TYPES.RESET_DATA:
@@ -57,7 +55,8 @@ function reducer(state, action) {
       newState = [...state];
       newSemesterName = {
         semesterId: newSemesterId,
-        semesterName: 'semester' + newSemesterId,
+
+        semesterName: `Semester ${newSemesterId}`,
         result: [{ courseId: 1, courseName: 'Course', grade: 5, unit: 0 }],
       };
 
@@ -90,7 +89,7 @@ function reducer(state, action) {
         courseId: newCourseId,
         courseName: `Course ${newCourseId}`,
         grade: 5,
-        unit: 1,
+        unit: 0,
       });
       return saveLocal(newState);
     case TYPES.EDIT_COURSE:
