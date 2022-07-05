@@ -23,7 +23,8 @@ import { db } from '../firebase';
 const Semester = () => {
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
-  const { loader } = useLoader();
+
+  const { loader, setLoader } = useLoader();
   const { id } = useParams();
   let semesterId = parseInt(id);
   const [error, setError] = useState('');
@@ -33,6 +34,7 @@ const Semester = () => {
   let toast = useToast();
   let semester = items.find(item => item.semesterId === semesterId);
   if (semester === undefined) return navigate('/');
+
   const handleSave = async () => {
     setSave(true);
     try {
@@ -84,10 +86,17 @@ const Semester = () => {
       },
     });
   }
+
   const handleLogout = async () => {
+    setError('');
     try {
       await logOut();
       localStorage.removeItem('login');
+      await handleSave();
+      dispatch({
+        type: TYPES.RESET_DATA,
+      });
+      setLoader(true);
       navigate('/');
     } catch (error) {
       setError(error.message);
