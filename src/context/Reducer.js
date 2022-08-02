@@ -45,6 +45,7 @@ function reducer(state, action) {
   switch (action.type) {
     case TYPES.RESET_DATA:
       return saveLocal(init);
+      
     case TYPES.GET_DATA_FROM_FIREBASE:
       let newData = saveLocal(JSON.parse(action.value.data));
 

@@ -6,6 +6,8 @@ import { TYPES } from './Reducer';
 import { useHandler } from './StateHandler';
 
 export const loaderContext = createContext();
+
+
 const LoaderContextProvider = ({ children }) => {
   const { user } = useAuth();
   const { dispatch } = useHandler();

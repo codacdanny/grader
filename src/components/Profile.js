@@ -70,28 +70,25 @@ const Profile = () => {
     }
   };
   function calculateCGPA() {
-    let totalGPA;
     let calcCGPA;
-    let totalUnit;
 
-    let cgpaObject = items
-      .map(item =>
-        item.result.reduce(
-          (a, b) => {
-            totalGPA = a.totalGPA + b.grade * b.unit;
-            totalUnit = a.totalUnit + b.unit;
-            return { totalGPA, totalUnit };
-          },
-          { totalUnit: 0, totalGPA: 0 }
-        )
+    let cgpaObject = items.map(item =>
+      item.result.reduce(
+        (a, b) => {
+          let totalGPA = a.totalGPA + parseInt(b.grade) * parseInt(b.unit);
+
+          let totalUnit = a.totalUnit + parseInt(b.unit);
+
+          return { totalGPA, totalUnit };
+        },
+        { totalUnit: 0, totalGPA: 0 }
       )
-      .map(item => {
-        if (item.totalUnit === 0) return null;
-        return item.totalGPA / item.totalUnit;
-      });
-    calcCGPA =
-      cgpaObject.reduce((a, b) => a + b, 0) /
-      cgpaObject.filter(x => x !== null).length;
+    );
+
+    let totalGPA = cgpaObject.reduce((a, b) => a + b.totalGPA, 0);
+    let totalUnit = cgpaObject.reduce((a, b) => a + b.totalUnit, 0);
+
+    calcCGPA = totalGPA / totalUnit;
 
     return calcCGPA;
   }
