@@ -102,6 +102,12 @@ const Semester = () => {
       setError(error.message);
     }
   };
+
+  window.onbeforeunload = async e => {
+    e.preventDefault();
+    await handleSave();
+  };
+
   return (
     <Box as="main" mx="auto" textColor="white">
       <Flex

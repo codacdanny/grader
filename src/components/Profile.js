@@ -100,6 +100,11 @@ const Profile = () => {
     });
   };
 
+  window.onbeforeunload = async e => {
+    e.preventDefault();
+    await handleSave();
+  };
+
   // if (!user) {
   //   (async () => {
   //     setError('');

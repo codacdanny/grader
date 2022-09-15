@@ -69,4 +69,3 @@ export function useAuth() {
 }
 
 export default UserAuthProvider;
-// export default FavoritesContext;
