@@ -12,5 +12,5 @@ While building this project I learned how to transverse through complex javascri
 Technologies used in this project:
 React, Chakra UI, Firebase(for authentication and real-time data storage), CSS, javascript, react-Icons.
 
-
+live link 🔗 https://the-grader.netlify.app/
 © 2022 codacdanny All Rights Reserved.
